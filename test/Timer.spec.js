@@ -16,7 +16,22 @@ describe('Timer', () => {
 
   test('1分のタイマーが表示されていること', () => {
     const wrapper = mount(Timer)
-    const div = wrapper.find('.timer')
-    expect(div.text()).toBe('00:01:00')
+    const timer = wrapper.find('#timer')
+    expect(timer.text()).toBe('00:01:00')
   })
+
+  test('時間を設定するテキストボックスが表示されていること', () => {
+    const wrapper = mount(Timer)
+    const textBox = wrapper.find('#timeeeee')
+    expect(textBox.exists()).toBe(true)
+  })
+
+  test('テキストボックスに入力した時間がタイマーに表示されていること', async () => {
+    const wrapper = mount(Timer)
+    const textBox = wrapper.find('#timeeeee')
+    const timer = wrapper.find('#timer')
+    await textBox.setValue(3)
+    expect(timer.text()).toBe('00:03:00')
+  })
+
 })
