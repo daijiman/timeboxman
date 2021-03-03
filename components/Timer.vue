@@ -1,8 +1,15 @@
 <template>
   <div>
-    <div class="title">TimerWorld</div>
-    <input id="timeeeee" v-model="timeeeee" class="border-gray-300" />
-    <div id="timer">{{ getFormattedTime(timeeeee) }}</div>
+    <h1>Timeboxman</h1>
+    <div id="timer" class="border rounded shadow-lg m-5 p-3 text-6xl">
+      {{ getFormattedTime(timeeeee) }}
+    </div>
+    <input
+      id="timeeeee"
+      v-model="timeeeee"
+      class="border rounded text-center"
+    />
+    sec
   </div>
 </template>
 
