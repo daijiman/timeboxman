@@ -10,8 +10,8 @@ describe('Timer', () => {
 
   test('view title', () => {
     const wrapper = mount(Timer)
-    const div = wrapper.find('.title')
-    expect(div.text()).toBe('TimerWorld')
+    const div = wrapper.find('#title')
+    expect(div.text()).toBe('Timeboxman')
   })
 
   test('1秒のタイマーが表示されていること', () => {
