@@ -40,6 +40,15 @@ export default Vue.extend({
     get0PadNumber: function (number, length) {
       return number.toString().padStart(length, "0");
     },
+    sleep: function(msec)  {
+      return new Promise(resolve => setTimeout(resolve, msec))
+    },
+    startTimer: function () {
+      while (this.timeeeee > 0) {
+        this.sleep(1000);
+        this.timeeeee--;
+      }
+    },
   },
 });
 </script>

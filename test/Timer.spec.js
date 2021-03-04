@@ -46,13 +46,14 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:03')
   })
 
-  // test('3秒経ったらタイマーが0になること', () => {
-  //   const wrapper = mount(Timer)
-  //   const timer = wrapper.find('#timer')
-  //   wrapper.setTimer(3)
-  //   wrapper.startTimer()
-  //   // 3秒待つ
-  //   expect(timer.text()).toBe('00:00:00')
-  // })
+  const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+  test('2秒経ったらタイマーが0になること', async () => {
+    const wrapper = mount(Timer)
+    const timer = wrapper.find('#timer')
+    wrapper.vm.setTimer(2)
+    wrapper.vm.startTimer()
+    await sleep(3000)
+    expect(timer.text()).toBe('00:00:00')
+  })
 
 })
