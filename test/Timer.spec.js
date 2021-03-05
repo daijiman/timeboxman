@@ -71,4 +71,20 @@ describe('Timer', () => {
     expect(wrapper.vm.$data.started).toBeTruthy()
   })
 
+  test('ストップボタンが表示されていること', () => {
+    const wrapper = mount(Timer)
+    const stopButton = wrapper.find('#stop-button')
+    expect(stopButton.exists()).toBeTruthy()
+  })
+
+  test('ストップボタンが表示されていること', () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    const stopButton = wrapper.find('#stop-button')
+    wrapper.vm.setTimer(10)
+    startButton.trigger("click")
+    expect(wrapper.vm.$data.started).toBeTruthy()
+    stopButton.trigger("click")
+    expect(wrapper.vm.$data.started).toBeFalsy()
+  })
 })

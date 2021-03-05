@@ -11,6 +11,8 @@
     />
     sec
     <button id="start-button" class="border rounded p-1" v-on:click="startTimer">START</button>
+    <button id="stop-button" class="border rounded p-1" v-on:click="stopTimer">STOP</button>
+
   </div>
 </template>
 
@@ -48,8 +50,11 @@ export default Vue.extend({
     startTimer: function () {
       this.started = true
     },
+    stopTimer: function () {
+      this.started = false
+    },
     countDown: async function () {
-      while (this.timeeeee > 0) {
+      while (this.timeeeee > 0 && this.started) {
         await this.sleep(1000);
         this.timeeeee--;
       }
