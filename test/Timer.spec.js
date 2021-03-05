@@ -22,13 +22,13 @@ describe('Timer', () => {
 
   test('時間を設定するテキストボックスが表示されていること', () => {
     const wrapper = mount(Timer)
-    const textBox = wrapper.find('#timeeeee')
+    const textBox = wrapper.find('#input-time')
     expect(textBox.exists()).toBe(true)
   })
 
   test('テキストボックスに入力した時間がタイマーに表示されていること', async () => {
     const wrapper = mount(Timer)
-    const textBox = wrapper.find('#timeeeee')
+    const textBox = wrapper.find('#input-time')
     const timer = wrapper.find('#timer')
     await textBox.setValue(3)
     expect(timer.text()).toBe('00:00:03')
@@ -36,7 +36,8 @@ describe('Timer', () => {
 
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
     const wrapper = mount(Timer)
-    expect(wrapper.vm.getFormattedTime(3)).toBe('00:00:03')
+    wrapper.vm.timerTime = 3
+    expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
   })
 
   test('タイマーを3秒にセットするとタイマーの表示が00:00:03になること', async () => {

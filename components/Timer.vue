@@ -2,17 +2,25 @@
   <div>
     <h1 id="title">Timeboxman</h1>
     <div id="timer" class="border rounded shadow-lg m-5 p-3 text-6xl">
-      {{ getFormattedTime(timeeeee) }}
+      {{ getFormattedTime }}
     </div>
     <input
-      id="timeeeee"
-      v-model="timeeeee"
+      id="input-time"
+      v-model="inputTime"
       class="border rounded text-center"
+      v-bind:disabled="started"
     />
     sec
-    <button id="start-button" class="border rounded p-1" v-on:click="startTimer">START</button>
-    <button id="stop-button" class="border rounded p-1" v-on:click="stopTimer">STOP</button>
-
+    <button
+      id="start-button"
+      class="border rounded p-1"
+      v-on:click="startTimer"
+    >
+      START
+    </button>
+    <button id="stop-button" class="border rounded p-1" v-on:click="stopTimer">
+      STOP
+    </button>
   </div>
 </template>
 
@@ -21,52 +29,60 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
-      timeeeee: 1,
-      started: false
+      inputTime: 1,
+      timerTime: 1,
+      started: false,
     };
   },
-  methods: {
-    setTimer: function (seconds) {
-      this.timeeeee = seconds;
-    },
-    getFormattedTime: function (setSeconds) {
-      const hours = Math.floor(setSeconds / (60 * 60));
+  computed: {
+    getFormattedTime: function () {
+      const hours = Math.floor(this.timerTime / (60 * 60));
       const hoursString = this.get0PadNumber(hours, 2);
 
-      const minutes = Math.floor((setSeconds % (60 * 60)) / 60);
+      const minutes = Math.floor((this.timerTime % (60 * 60)) / 60);
       const minutesString = this.get0PadNumber(minutes, 2);
 
-      const seconds = setSeconds - hours * (60 * 60) - minutes * 60;
+      const seconds = this.timerTime - hours * (60 * 60) - minutes * 60;
       const secondsString = this.get0PadNumber(seconds, 2);
 
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
+  },
+  methods: {
+    setTimer: function (seconds) {
+      this.inputTime = seconds;
+    },
     get0PadNumber: function (number, length) {
       return number.toString().padStart(length, "0");
     },
-    sleep: function(msec)  {
-      return new Promise(resolve => setTimeout(resolve, msec))
+    sleep: function (msec) {
+      return new Promise((resolve) => setTimeout(resolve, msec));
     },
     startTimer: function () {
-      this.started = true
+      this.started = true;
     },
     stopTimer: function () {
-      this.started = false
+      this.started = false;
     },
     countDown: async function () {
-      while (this.timeeeee > 0 && this.started) {
+      while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
-        this.timeeeee--;
+        this.timerTime--;
       }
-      this.started = false
-    }
+      this.started = false;
+    },
   },
   watch: {
-    started: function() {
-      if (this.started) {
-        this.countDown()
+    inputTime: function () {
+      if (!this.started) {
+        this.timerTime = this.inputTime;
       }
-    }
-  }
+    },
+    started: function () {
+      if (this.started) {
+        this.countDown();
+      }
+    },
+  },
 });
 </script>
