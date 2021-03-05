@@ -74,9 +74,7 @@ export default Vue.extend({
   },
   watch: {
     inputTime: function () {
-      if (!this.started) {
-        this.timerTime = this.inputTime;
-      }
+      this.timerTime = this.inputTime;
     },
     started: function () {
       if (this.started) {

@@ -60,22 +60,22 @@ describe('Timer', () => {
   test('スタートボタンが表示されていること', () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
-    expect(startButton.exists()).toBeTruthy()
+    expect(startButton.exists()).toBe(true)
   })
 
   test('スタートボタンを押すとタイマーがスタートすること', () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
     wrapper.vm.setTimer(2)
-    expect(wrapper.vm.$data.started).toBeFalsy()
+    expect(wrapper.vm.$data.started).toBe(false)
     startButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBeTruthy()
+    expect(wrapper.vm.$data.started).toBe(true)
   })
 
   test('ストップボタンが表示されていること', () => {
     const wrapper = mount(Timer)
     const stopButton = wrapper.find('#stop-button')
-    expect(stopButton.exists()).toBeTruthy()
+    expect(stopButton.exists()).toBe(true)
   })
 
   test('ストップボタンが表示されていること', () => {
@@ -84,8 +84,18 @@ describe('Timer', () => {
     const stopButton = wrapper.find('#stop-button')
     wrapper.vm.setTimer(10)
     startButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBeTruthy()
+    expect(wrapper.vm.$data.started).toBe(true)
     stopButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBeFalsy()
+    expect(wrapper.vm.$data.started).toBe(false)
+  })
+
+  test('タイマーがカウントダウンしている間は時間入力のテキストボックスに入力できないようになること', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    wrapper.vm.setTimer(10)
+    startButton.trigger("click")
+    await sleep(1)
+    const inputTime = wrapper.find('#input-time')
+    expect(inputTime.attributes().disabled).toBe("disabled")
   })
 })
