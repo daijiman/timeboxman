@@ -10,6 +10,7 @@
       class="border rounded text-center"
     />
     sec
+    <button id="start-button" class="border rounded p-1" v-on:click="startTimer">START</button>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ export default Vue.extend({
   data() {
     return {
       timeeeee: 1,
+      started: false
     };
   },
   methods: {
@@ -44,11 +46,22 @@ export default Vue.extend({
       return new Promise(resolve => setTimeout(resolve, msec))
     },
     startTimer: function () {
+      this.started = true
+    },
+    countDown: async function () {
       while (this.timeeeee > 0) {
-        this.sleep(1000);
+        await this.sleep(1000);
         this.timeeeee--;
       }
-    },
+      this.started = false
+    }
   },
+  watch: {
+    started: function() {
+      if (this.started) {
+        this.countDown()
+      }
+    }
+  }
 });
 </script>

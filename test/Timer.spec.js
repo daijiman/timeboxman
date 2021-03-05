@@ -56,4 +56,19 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:00')
   })
 
+  test('スタートボタンが表示されていること', () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    expect(startButton.exists()).toBeTruthy()
+  })
+
+  test('スタートボタンを押すとタイマーがスタートすること', () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    wrapper.vm.setTimer(2)
+    expect(wrapper.vm.$data.started).toBeFalsy()
+    startButton.trigger("click")
+    expect(wrapper.vm.$data.started).toBeTruthy()
+  })
+
 })
