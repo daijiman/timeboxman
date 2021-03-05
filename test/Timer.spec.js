@@ -93,9 +93,21 @@ describe('Timer', () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
     wrapper.vm.setTimer(10)
-    startButton.trigger("click")
-    await sleep(1)
+    await startButton.trigger("click")
     const inputTime = wrapper.find('#input-time')
     expect(inputTime.attributes().disabled).toBe("disabled")
+  })
+
+  test('タイマーが止まっているときはSTOPボタンが赤くなる', () => {
+    const wrapper = mount(Timer)
+    const stopButton = wrapper.find('#stop-button')
+    expect(stopButton.attributes().class.split(' ').includes('bg-red-200')).toBe(true)
+  })
+
+  test('タイマーがカウントダウンしているときはSTARTボタンが緑になる', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    await startButton.trigger('click')
+    expect(startButton.attributes().class.split(' ').includes('bg-green-200')).toBe(true)
   })
 })

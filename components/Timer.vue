@@ -15,10 +15,16 @@
       id="start-button"
       class="border rounded p-1"
       v-on:click="startTimer"
+      v-bind:class="{ 'bg-green-200': started }"
     >
       START
     </button>
-    <button id="stop-button" class="border rounded p-1" v-on:click="stopTimer">
+    <button
+      id="stop-button"
+      class="border rounded p-1"
+      v-bind:class="{ 'bg-red-200': !started }"
+      v-on:click="stopTimer"
+    >
       STOP
     </button>
   </div>
