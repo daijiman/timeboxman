@@ -78,7 +78,7 @@ describe('Timer', () => {
     expect(stopButton.exists()).toBe(true)
   })
 
-  test('ストップボタンが表示されていること', () => {
+  test('ストップボタンを押すとタイマーがストップすること', () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
     const stopButton = wrapper.find('#stop-button')
