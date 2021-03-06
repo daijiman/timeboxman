@@ -27,6 +27,9 @@
     >
       STOP
     </button>
+    <div id="message-box">
+      {{message}}
+    </div>
   </div>
 </template>
 
@@ -38,6 +41,8 @@ export default Vue.extend({
       inputTime: 1,
       timerTime: 1,
       started: false,
+      timerFinished: false,
+      message: '',
     };
   },
   computed: {
@@ -66,6 +71,7 @@ export default Vue.extend({
     },
     startTimer: function () {
       this.started = true;
+      this.timerFinished = false;
     },
     stopTimer: function () {
       this.started = false;
@@ -74,6 +80,9 @@ export default Vue.extend({
       while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
         this.timerTime--;
+        if (this.timerTime == 0) {
+          this.timerFinished = true;
+        }
       }
       this.started = false;
     },
@@ -87,6 +96,13 @@ export default Vue.extend({
         this.countDown();
       }
     },
+    timerFinished: function () {
+      if (this.timerFinished) {
+        this.message = '終わったよ！！'
+      } else {
+        this.message = ''
+      }
+    }
   },
 });
 </script>
