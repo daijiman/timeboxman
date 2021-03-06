@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 id="title">Timeboxman</h1>
-    <div id="timer" class="border rounded shadow-lg m-5 p-3 text-6xl">
+    <div id="timer" class="border rounded shadow-lg m-5 p-3 text-6xl min-w-xs max-w-xs mx-auto">
       {{ getFormattedTime }}
     </div>
     <input
@@ -27,7 +27,11 @@
     >
       STOP
     </button>
-    <div id="message-box">
+
+    <div id="message-box" 
+      v-if="timerFinished" 
+      class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
+    >
       {{message}}
     </div>
   </div>
@@ -76,12 +80,15 @@ export default Vue.extend({
     stopTimer: function () {
       this.started = false;
     },
+    finishTimer: function() {
+      this.timerFinished = true;
+    },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
         this.timerTime--;
         if (this.timerTime == 0) {
-          this.timerFinished = true;
+          this.finishTimer();
         }
       }
       this.started = false;

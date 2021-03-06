@@ -111,12 +111,6 @@ describe('Timer', () => {
     expect(startButton.attributes().class.split(' ').includes('bg-green-200')).toBe(true)
   })
 
-  test('メッセージボックスが存在すること', () => {
-    const wrapper = mount(Timer)
-    const message = wrapper.find('#message-box')
-    expect(message.exists()).toBe(true)
-  })
-
   test('画面ロード時はタイマー完了状態でないこと', () => {
     const wrapper = mount(Timer)
     expect(wrapper.vm.$data.timerFinished).toBe(false)
@@ -132,24 +126,24 @@ describe('Timer', () => {
     expect(wrapper.vm.$data.timerFinished).toBe(true)
   })
 
-  test('タイマー完了状態は、完了メッセージが表示されていること', done => {
+  test('タイマー完了状態は、メッセージボックスに完了メッセージが表示されていること', done => {
     const wrapper = mount(Timer)
     wrapper.vm.$data.timerFinished = true
-    const message = wrapper.find('#message-box')
 
     wrapper.vm.$nextTick(() => {
+      const message = wrapper.find('#message-box')
       expect(message.text()).toBe('終わったよ！！')
       done()
     })
   })
 
-  test('タイマーが完了状態でない場合は、メッセージが空であること', done => {
+  test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
     const wrapper = mount(Timer)
     wrapper.vm.$data.timerFinished = false
-    const message = wrapper.find('#message-box')
-
+    
     wrapper.vm.$nextTick(() => {
-      expect(message.text()).toBe('')
+      const message = wrapper.find('#message-box')
+      expect(message.exists()).toBe(false)
       done()
     })
   })
