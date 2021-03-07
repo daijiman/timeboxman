@@ -16,7 +16,7 @@
     sec
     <button
       id="start-button"
-      class="border rounded p-1"
+      class="border rounded p-1 disabled:opacity-50"
       v-on:click="startTimer"
       v-bind:class="{ 'bg-green-200': started }"
       v-bind:disabled="startButtonDisabled"
