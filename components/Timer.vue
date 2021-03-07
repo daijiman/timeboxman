@@ -89,6 +89,11 @@ export default Vue.extend({
     },
     finishTimer: function () {
       this.timerFinished = true;
+      if (this.timerFinished) {
+        this.message = "終わったよ！！";
+      } else {
+        this.message = "";
+      }
     },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
@@ -117,13 +122,6 @@ export default Vue.extend({
     started: function () {
       if (this.started) {
         this.countDown();
-      }
-    },
-    timerFinished: function () {
-      if (this.timerFinished) {
-        this.message = "終わったよ！！";
-      } else {
-        this.message = "";
       }
     },
   },

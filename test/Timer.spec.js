@@ -126,15 +126,12 @@ describe('Timer', () => {
     expect(wrapper.vm.$data.timerFinished).toBe(true)
   })
 
-  test('タイマー完了状態は、メッセージボックスに完了メッセージが表示されていること', done => {
+  test('タイマー完了状態は、メッセージボックスに完了メッセージが表示されていること', async () => {
     const wrapper = mount(Timer)
-    wrapper.vm.$data.timerFinished = true
+    await wrapper.vm.finishTimer()
 
-    wrapper.vm.$nextTick(() => {
-      const message = wrapper.find('#message-box')
-      expect(message.text()).toBe('終わったよ！！')
-      done()
-    })
+    const message = wrapper.find('#message-box')
+    expect(message.text()).toBe('終わったよ！！')
   })
 
   test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
