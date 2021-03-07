@@ -89,11 +89,7 @@ export default Vue.extend({
     },
     finishTimer: function () {
       this.timerFinished = true;
-      if (this.timerFinished) {
-        this.message = "終わったよ！！";
-      } else {
-        this.message = "";
-      }
+      this.message = "終わったよ！！";
     },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
