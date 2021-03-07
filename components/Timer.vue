@@ -117,6 +117,7 @@ export default Vue.extend({
       this.timerTime = this.inputTime;
       this.timerFinished = false;
       this.message = "";
+      this.preventStartingTimer();
     },
   },
   watch: {
