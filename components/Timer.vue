@@ -69,6 +69,9 @@ export default Vue.extend({
 
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
+    isFinished: function () {
+      return this.timerTime == 0 && this.started == true
+    }
   },
   methods: {
     setTimer: function (seconds) {
@@ -90,6 +93,7 @@ export default Vue.extend({
     finishTimer: function () {
       this.timerFinished = true;
       this.message = "終わったよ！！";
+      this.started = false;
     },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
@@ -99,10 +103,6 @@ export default Vue.extend({
         }
         this.timerTime--;
       }
-      if (this.timerTime == 0) {
-        this.finishTimer();
-      }
-      this.started = false;
     },
     resetTimer: function () {
       this.started = false;
@@ -118,6 +118,11 @@ export default Vue.extend({
     started: function () {
       if (this.started) {
         this.countDown();
+      }
+    },
+    timerTime: function () {
+      if(this.isFinished){
+        this.finishTimer();
       }
     },
   },

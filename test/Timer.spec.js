@@ -118,9 +118,8 @@ describe('Timer', () => {
 
   test('カウントダウンがゼロになったらタイマー完了状態になること', async () => {
     const wrapper = mount(Timer)
-    const timer = wrapper.find('#timer')
-    wrapper.vm.setTimer(1)
-    wrapper.vm.startTimer()
+    await wrapper.vm.setTimer(1)
+    await wrapper.vm.startTimer()
     await sleep(2000)
 
     expect(wrapper.vm.$data.timerFinished).toBe(true)
