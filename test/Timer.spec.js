@@ -178,7 +178,7 @@ describe('Timer', () => {
     expect(isReset(wrapper)).toBe(true)
   })
 
-  test('', async () => {
+  test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
     const stopButton = wrapper.find('#stop-button')
