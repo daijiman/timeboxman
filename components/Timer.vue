@@ -70,7 +70,7 @@ export default Vue.extend({
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
     isFinished: function () {
-      return this.timerTime == 0 && this.started == true
+      return this.timerTime === 0 && this.started === true
     }
   },
   methods: {

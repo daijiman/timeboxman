@@ -157,7 +157,6 @@ describe('Timer', () => {
   test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
     const wrapper = mount(Timer)
     const startButton = wrapper.find('#start-button')
-    const sttopButton = wrapper.find('#stop-button')
 
     await wrapper.vm.setTimer(1)
     await startButton.trigger("click")
