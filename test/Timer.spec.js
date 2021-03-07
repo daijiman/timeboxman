@@ -169,10 +169,16 @@ describe('Timer', () => {
     const messageBox = wrapper.find('#message-box')
     await messageBox.trigger('click')
 
-    const { inputTime, timerTime, timerFinished, message } = wrapper.vm.$data
-    expect(inputTime).toEqual(timerTime)
-    expect(timerFinished).toBe(false)
-    expect(message).toEqual('')
-
+    expect(isReset(wrapper)).toBe(true)
   })
+
+  const isReset = (timer) => {
+    const { inputTime, timerTime, timerFinished, message } = timer.vm.$data
+    if (inputTime === timerTime &&
+      timerFinished === false &&
+      message === '') {
+      return true
+    }
+    return false
+  }
 })
