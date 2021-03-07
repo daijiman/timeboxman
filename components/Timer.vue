@@ -19,6 +19,7 @@
       class="border rounded p-1"
       v-on:click="startTimer"
       v-bind:class="{ 'bg-green-200': started }"
+      v-bind:disabled="startButtonDisabled"
     >
       START
     </button>
@@ -54,6 +55,7 @@ export default Vue.extend({
       started: false,
       timerFinished: false,
       message: "",
+      startButtonDisabled: false,
     };
   },
   computed: {
@@ -70,8 +72,8 @@ export default Vue.extend({
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
     isFinished: function () {
-      return this.timerTime === 0 && this.started === true
-    }
+      return this.timerTime === 0 && this.started === true;
+    },
   },
   methods: {
     setTimer: function (seconds) {
@@ -87,8 +89,14 @@ export default Vue.extend({
       this.started = true;
       this.timerFinished = false;
     },
-    stopTimer: function () {
+    stopTimer: async function () {
       this.started = false;
+      this.preventStartingTimer();
+    },
+    preventStartingTimer: async function () {
+      this.startButtonDisabled = true;
+      await this.sleep(1000);
+      this.startButtonDisabled = false;
     },
     finishTimer: function () {
       this.timerFinished = true;
@@ -121,7 +129,7 @@ export default Vue.extend({
       }
     },
     timerTime: function () {
-      if(this.isFinished){
+      if (this.isFinished) {
         this.finishTimer();
       }
     },

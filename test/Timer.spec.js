@@ -178,6 +178,18 @@ describe('Timer', () => {
     expect(isReset(wrapper)).toBe(true)
   })
 
+  test('', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    const stopButton = wrapper.find('#stop-button')
+    wrapper.vm.setTimer(10)
+
+    await startButton.trigger('click')
+    await stopButton.trigger('click')
+
+    expect(startButton.attributes().disabled).toBe('disabled')
+  })
+
   const isReset = (timer) => {
     const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
     if (
