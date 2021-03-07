@@ -140,7 +140,7 @@ describe('Timer', () => {
   test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
     const wrapper = mount(Timer)
     wrapper.vm.$data.timerFinished = false
-    
+
     wrapper.vm.$nextTick(() => {
       const message = wrapper.find('#message-box')
       expect(message.exists()).toBe(false)
@@ -156,5 +156,23 @@ describe('Timer', () => {
     startButton.trigger("click")
 
     expect(wrapper.vm.$data.timerFinished).toBe(false)
+  })
+
+  test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    const sttopButton = wrapper.find('#stop-button')
+
+    await wrapper.vm.setTimer(1)
+    await startButton.trigger("click")
+    await sleep(2000)
+    const messageBox = wrapper.find('#message-box')
+    await messageBox.trigger('click')
+
+    const { inputTime, timerTime, timerFinished, message } = wrapper.vm.$data
+    expect(inputTime).toEqual(timerTime)
+    expect(timerFinished).toBe(false)
+    expect(message).toEqual('')
+
   })
 })

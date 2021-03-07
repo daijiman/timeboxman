@@ -1,7 +1,10 @@
 <template>
   <div>
     <h1 id="title">Timeboxman</h1>
-    <div id="timer" class="border rounded shadow-lg m-5 p-3 text-6xl min-w-xs max-w-xs mx-auto">
+    <div
+      id="timer"
+      class="border rounded shadow-lg m-5 p-3 text-6xl min-w-xs max-w-xs mx-auto"
+    >
       {{ getFormattedTime }}
     </div>
     <input
@@ -28,11 +31,13 @@
       STOP
     </button>
 
-    <div id="message-box" 
-      v-if="timerFinished" 
+    <div
+      id="message-box"
+      v-if="timerFinished"
       class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
+      @click="resetTimer"
     >
-      {{message}}
+      {{ message }}
     </div>
   </div>
 </template>
@@ -46,7 +51,7 @@ export default Vue.extend({
       timerTime: 1,
       started: false,
       timerFinished: false,
-      message: '',
+      message: "",
     };
   },
   computed: {
@@ -80,7 +85,7 @@ export default Vue.extend({
     stopTimer: function () {
       this.started = false;
     },
-    finishTimer: function() {
+    finishTimer: function () {
       this.timerFinished = true;
     },
     countDown: async function () {
@@ -92,6 +97,12 @@ export default Vue.extend({
         }
       }
       this.started = false;
+    },
+    resetTimer: function () {
+      this.started = false;
+      this.timerTime = this.inputTime;
+      this.timerFinished = false;
+      this.message = "";
     },
   },
   watch: {
@@ -105,11 +116,11 @@ export default Vue.extend({
     },
     timerFinished: function () {
       if (this.timerFinished) {
-        this.message = '終わったよ！！'
+        this.message = "終わったよ！！";
       } else {
-        this.message = ''
+        this.message = "";
       }
-    }
+    },
   },
 });
 </script>
