@@ -172,11 +172,25 @@ describe('Timer', () => {
     expect(isReset(wrapper)).toBe(true)
   })
 
+  test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    const resetButton = wrapper.find('#reset-button')
+    wrapper.vm.setTimer(10)
+    await startButton.trigger('click')
+    await resetButton.trigger('click')
+
+    expect(isReset(wrapper)).toBe(true)
+  })
+
   const isReset = (timer) => {
-    const { inputTime, timerTime, timerFinished, message } = timer.vm.$data
-    if (inputTime === timerTime &&
+    const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
+    if (
+      inputTime === timerTime &&
       timerFinished === false &&
-      message === '') {
+      message === '' &&
+      started === false
+    ) {
       return true
     }
     return false

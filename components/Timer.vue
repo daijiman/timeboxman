@@ -30,7 +30,13 @@
     >
       STOP
     </button>
-
+    <button
+      id="reset-button"
+      class="border rounded p-1"
+      @click="resetTimer"
+    >
+      RESET
+    </button>
     <div
       id="message-box"
       v-if="timerFinished"
@@ -91,6 +97,9 @@ export default Vue.extend({
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
+        if(!this.started){
+          break;
+        }
         this.timerTime--;
         if (this.timerTime == 0) {
           this.finishTimer();
