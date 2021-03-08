@@ -86,6 +86,9 @@ export default Vue.extend({
       return new Promise((resolve) => setTimeout(resolve, msec));
     },
     startTimer: function () {
+      if(this.timerTime < 1){
+        return;
+      }
       this.started = true;
       this.timerFinished = false;
     },

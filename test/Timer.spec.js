@@ -190,6 +190,15 @@ describe('Timer', () => {
     expect(startButton.attributes().disabled).toBe('disabled')
   })
 
+  test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
+    const wrapper = mount(Timer)
+    const startButton = wrapper.find('#start-button')
+    wrapper.vm.timerTime = 0
+    await startButton.trigger('click')
+
+    expect(wrapper.vm.started).toBe(false)
+  })
+
   const isReset = (timer) => {
     const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
     if (
