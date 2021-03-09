@@ -12,27 +12,31 @@
       id="input-time"
       v-model="inputTime"
       class="border rounded text-center"
-      v-bind:disabled="started"
+      :disabled="started"
     />
     sec
     <button
       id="start-button"
       class="border rounded p-1 disabled:opacity-50"
-      v-on:click="startTimer"
-      v-bind:class="{ 'bg-green-200': started }"
-      v-bind:disabled="startButtonDisabled"
+      :class="{ 'bg-green-200': started }"
+      @click="startTimer"
+      :disabled="startButtonDisabled"
     >
       START
     </button>
     <button
       id="stop-button"
       class="border rounded p-1"
-      v-bind:class="{ 'bg-red-200': !started }"
-      v-on:click="stopTimer"
+      :class="{ 'bg-red-200': !started }"
+      @click="stopTimer"
     >
       STOP
     </button>
-    <button id="reset-button" class="border rounded p-1" @click="resetTimer">
+    <button
+      id="reset-button"
+      class="border rounded p-1"
+      @click="resetTimer"
+    >
       RESET
     </button>
     <div
