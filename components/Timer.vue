@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import finishedSound from '~/assets/sound/Warning-Siren01-3.mp3'
+const audio = new Audio(finishedSound)
 import Vue from "vue";
 export default Vue.extend({
   data() {
@@ -110,6 +112,7 @@ export default Vue.extend({
       this.timerFinished = true;
       this.message = "終わったよ！！";
       this.started = false;
+      audio.play()
     },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
@@ -125,6 +128,7 @@ export default Vue.extend({
       this.timerTime = this.inputTime;
       this.timerFinished = false;
       this.message = "";
+      audio.pause()
       this.preventStartingTimer();
     },
   },
