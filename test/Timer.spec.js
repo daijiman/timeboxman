@@ -133,6 +133,14 @@ describe('Timer', () => {
     expect(message.text()).toBe('終わったよ！！')
   })
 
+  test('タイマー完了状態は、タイマーの背景色が赤になること', async () => {
+    const wrapper = mount(Timer)
+    await wrapper.vm.finishTimer()
+
+    const timer = wrapper.find('#timer')
+    expect(timer.attributes().class.split(' ').includes('bg-red-200')).toBe(true)
+  })
+
   test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
     const wrapper = mount(Timer)
     wrapper.vm.$data.timerFinished = false
