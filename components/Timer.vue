@@ -51,6 +51,7 @@
 </template>
 
 <script>
+// const musicPath = require("@/assets/sound/Warning-Siren01-3.mp3");
 import finishedSound from '~/assets/sound/Warning-Siren01-3.mp3'
 const audio = new Audio(finishedSound)
 import Vue from "vue";
