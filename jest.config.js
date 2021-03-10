@@ -18,5 +18,6 @@ module.exports = {
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue'
-  ]
+  ],
+  setupFiles: ["./jest.setup.js"]
 }
