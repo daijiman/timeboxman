@@ -32,11 +32,7 @@
     >
       STOP
     </button>
-    <button
-      id="reset-button"
-      class="border rounded p-1"
-      @click="resetTimer"
-    >
+    <button id="reset-button" class="border rounded p-1" @click="resetTimer">
       RESET
     </button>
     <div
@@ -51,8 +47,7 @@
 </template>
 
 <script>
-import finishedSound from '~/assets/sound/Warning-Siren01-3.mp3'
-const audio = new Audio(finishedSound)
+import finishedSound from "~/assets/sound/Warning-Siren01-3.mp3";
 import Vue from "vue";
 export default Vue.extend({
   data() {
@@ -63,6 +58,7 @@ export default Vue.extend({
       timerFinished: false,
       message: "",
       startButtonDisabled: false,
+      audio: new Audio(finishedSound),
     };
   },
   computed: {
@@ -93,7 +89,7 @@ export default Vue.extend({
       return new Promise((resolve) => setTimeout(resolve, msec));
     },
     startTimer: function () {
-      if(this.timerTime < 1){
+      if (this.timerTime < 1) {
         return;
       }
       this.started = true;
@@ -112,7 +108,7 @@ export default Vue.extend({
       this.timerFinished = true;
       this.message = "終わったよ！！";
       this.started = false;
-      audio.play()
+      this.audio.play();
     },
     countDown: async function () {
       while (this.timerTime > 0 && this.started) {
@@ -128,7 +124,7 @@ export default Vue.extend({
       this.timerTime = this.inputTime;
       this.timerFinished = false;
       this.message = "";
-      audio.pause()
+      this.audio.pause();
       this.preventStartingTimer();
     },
   },

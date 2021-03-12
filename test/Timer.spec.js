@@ -187,8 +187,17 @@ describe('Timer', () => {
     expect(wrapper.vm.started).toBe(false)
   })
 
-  // test('タイマー終了サウンドがTimerコンポーネントに存在している', () => {
-  // })
+  test('タイマー終了サウンドがTimerコンポーネントに存在している', () => {
+    expect(wrapper.vm.audio).toBeTruthy()
+  })
+
+  test('タイマー終了時に終了サウンドが再生される', async () => {
+    const finishSoundSpy = jest.spyOn(wrapper.vm.audio, 'play')
+    wrapper.find('#start-button').trigger('click')
+    await sleep(1100)
+    expect(finishSoundSpy).toHaveBeenCalled()
+    finishSoundSpy.mockRestore()
+  })
 
   const isReset = (timer) => {
     const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
