@@ -48,6 +48,7 @@
 
 <script>
 import finishedSound from "~/assets/sound/Warning-Siren01-3.mp3";
+import io from "socket.io-client";
 import Vue from "vue";
 export default Vue.extend({
   data() {
@@ -59,7 +60,19 @@ export default Vue.extend({
       message: "",
       startButtonDisabled: false,
       audio: new Audio(finishedSound),
+      socket: "",
     };
+  },
+  mounted: function () {
+    this.socket = io("ws://localhost:3001");
+    this.socket.on("started", (data) => {
+      console.log("recieved : started");
+      if (data.started) {
+        this.resetTimer();
+        this.timerTime = data.timerTime;
+        this.startTimer();
+      }
+    });
   },
   computed: {
     getFormattedTime: function () {
@@ -127,6 +140,10 @@ export default Vue.extend({
       this.audio.pause();
       this.preventStartingTimer();
     },
+    sendStarted: function () {
+      const data = { started: this.started, timerTime: this.timerTime };
+      this.socket.emit("started", data);
+    },
   },
   watch: {
     inputTime: function () {
@@ -135,6 +152,7 @@ export default Vue.extend({
     started: function () {
       if (this.started) {
         this.countDown();
+        this.sendStarted();
       }
     },
     timerTime: function () {
