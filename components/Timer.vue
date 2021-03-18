@@ -28,7 +28,7 @@
       id="stop-button"
       class="border rounded p-1"
       :class="{ 'bg-red-200': !started }"
-      @click="stopTimer"
+      @click="stopTimer(true)"
     >
       STOP
     </button>
@@ -73,6 +73,10 @@ export default Vue.extend({
         this.startTimer();
       }
     });
+    this.socket.on("stop", (data) => {
+      console.log("recieved : stop");
+      this.stopTimer();
+    });
   },
   computed: {
     getFormattedTime: function () {
@@ -108,8 +112,11 @@ export default Vue.extend({
       this.started = true;
       this.timerFinished = false;
     },
-    stopTimer: async function () {
+    stopTimer: async function (needEmit=false) {
       this.started = false;
+      if(needEmit){
+        this.sendStop();
+      }
       this.preventStartingTimer();
     },
     preventStartingTimer: async function () {
@@ -143,6 +150,11 @@ export default Vue.extend({
     sendStarted: function () {
       const data = { started: this.started, timerTime: this.timerTime };
       this.socket.emit("started", data);
+    },
+    sendStop: function () {
+      console.log("send stop");
+      const data = { started: false };
+      this.socket.emit("stop", data);
     },
   },
   watch: {
