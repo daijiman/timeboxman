@@ -23,12 +23,12 @@ describe('Timer', () => {
   })
 
   test('時間を設定するテキストボックスが表示されていること', () => {
-    const textBox = wrapper.find('#input-time')
+    const textBox = wrapper.find('#input-time-sec')
     expect(textBox.exists()).toBe(true)
   })
 
   test('テキストボックスに入力した時間がタイマーに表示されていること', async () => {
-    const textBox = wrapper.find('#input-time')
+    const textBox = wrapper.find('#input-time-sec')
     const timer = wrapper.find('#timer')
     await textBox.setValue(3)
     expect(timer.text()).toBe('00:00:03')
@@ -86,7 +86,7 @@ describe('Timer', () => {
     const startButton = wrapper.find('#start-button')
     wrapper.vm.setTimer(10)
     await startButton.trigger("click")
-    const inputTime = wrapper.find('#input-time')
+    const inputTime = wrapper.find('#input-time-sec')
     expect(inputTime.attributes().disabled).toBe("disabled")
   })
 
