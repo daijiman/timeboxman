@@ -9,9 +9,14 @@
       {{ getFormattedTime }}
     </div>
     <input
+      id="input-time-min"
+      class="border rounded text-center w-8"
+    />
+    min
+    <input
       id="input-time-sec"
       v-model="inputTime"
-      class="border rounded text-center"
+      class="border rounded text-center w-8"
       :disabled="started"
     />
     sec
