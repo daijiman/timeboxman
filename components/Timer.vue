@@ -164,6 +164,9 @@ export default Vue.extend({
   },
   watch: {
     inputTime: function () {
+      if (60 <= this.inputTime) {
+        this.inputTime = 59;
+      }
       this.timerTime = this.inputTime;
     },
     started: function () {
