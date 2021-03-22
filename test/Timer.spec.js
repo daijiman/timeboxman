@@ -39,6 +39,12 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:03')
   })
 
+  // TODO
+  // test('秒のテキストボックスに半角数字以外を入力しても初期値のままになっていること', async () => {
+  //   const textBox = wrapper.find('#input-time-sec')
+  //   expect(textBox.element.value).toBe('1')
+  // })
+
   test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
     const textBox = wrapper.find('#input-time-sec')
     const timer = wrapper.find('#timer')
@@ -46,7 +52,6 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:59')
   })
   
-
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
     wrapper.vm.timerTime = 3
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
