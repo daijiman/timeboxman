@@ -39,11 +39,16 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:03')
   })
 
-  // TODO
   // test('秒のテキストボックスに半角数字以外を入力しても初期値のままになっていること', async () => {
   //   const textBox = wrapper.find('#input-time-sec')
-  //   expect(textBox.element.value).toBe('1')
+  //   console.log(textBox2.element.value, "++++L+++++")
+  //   expect(textBox.element.value).toBe('')
   // })
+  test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
+    const textBox = wrapper.find('#input-time-sec')
+    await textBox.setValue('あ１')
+    expect(textBox.element.value).toBe('1')
+  })
 
   test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
     const textBox = wrapper.find('#input-time-sec')

@@ -169,13 +169,20 @@ export default Vue.extend({
       } else {
         return true
       }
+    },
+    validate_input_time: function() {
+      const re = /\D/g;
+      if (re.test(this.inputTime)) {
+        this.inputTime = 1
+      }
+      if (60 <= this.inputTime) {
+        this.inputTime = 59;
+      }
     }
   },
   watch: {
     inputTime: function () {
-      if (60 <= this.inputTime) {
-        this.inputTime = 59;
-      }
+      this.validate_input_time(this.inputTime)
       this.timerTime = this.inputTime;
     },
     started: function () {
