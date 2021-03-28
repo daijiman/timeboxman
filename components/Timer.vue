@@ -11,11 +11,12 @@
     <input
       id="input-time-min"
       class="border rounded text-center w-8"
+      v-model="inputMin"
     />
     min
     <input
       id="input-time-sec"
-      v-model="inputTime"
+      v-model="inputSec"
       class="border rounded text-center w-8"
       :disabled="started"
       @keypress="validate"
@@ -61,6 +62,8 @@ export default Vue.extend({
     return {
       inputTime: 1,
       timerTime: 1,
+      inputSec: 1,
+      inputMin: 0,
       started: false,
       timerFinished: false,
       message: "",
@@ -102,6 +105,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    setInputSec(event) {
+      this.inputTime = event.target.value;
+    },
     setTimer: function (seconds) {
       this.inputTime = seconds;
     },
@@ -118,9 +124,9 @@ export default Vue.extend({
       this.started = true;
       this.timerFinished = false;
     },
-    stopTimer: async function (needEmit=false) {
+    stopTimer: async function (needEmit = false) {
       this.started = false;
-      if(needEmit){
+      if (needEmit) {
         this.sendStop();
       }
       this.preventStartingTimer();
@@ -163,26 +169,37 @@ export default Vue.extend({
       this.socket.emit("stop", data);
     },
     validate: function (e) {
-      const charCode = (e.which) ? e.which : e.keyCode
+      const charCode = e.which ? e.which : e.keyCode;
       if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         e.preventDefault();
       } else {
-        return true
+        return true;
       }
     },
-    validate_input_time: function() {
+    validateInputTime: function (time) {
       const re = /\D/g;
-      if (re.test(this.inputTime)) {
-        this.inputTime = 1
+      if (re.test(time)) {
+        return 1;
       }
-      if (60 <= this.inputTime) {
-        this.inputTime = 59;
+      if (60 <= time) {
+        return 59;
       }
-    }
+      return time;
+    },
+    calcInputTime: function () {
+      this.inputTime = Number(this.inputSec) + Number(this.inputMin) * 60;
+    },
   },
   watch: {
+    inputSec: function () {
+      this.inputSec = this.validateInputTime(this.inputSec);
+      this.calcInputTime();
+    },
+    inputMin: function () {
+      this.inputMin = this.validateInputTime(this.inputMin);
+      this.calcInputTime();
+    },
     inputTime: function () {
-      this.validate_input_time(this.inputTime)
       this.timerTime = this.inputTime;
     },
     started: function () {

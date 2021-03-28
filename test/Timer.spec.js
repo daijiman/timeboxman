@@ -56,7 +56,7 @@ describe('Timer', () => {
     await textBox.setValue(60)
     expect(timer.text()).toBe('00:00:59')
   })
-  
+
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
     wrapper.vm.timerTime = 3
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
@@ -221,6 +221,22 @@ describe('Timer', () => {
     expect(finishSoundSpy).toHaveBeenCalled()
     finishSoundSpy.mockRestore()
   })
+
+  describe('分のテキストボックス', () => {
+    test('分のテキストボックスに3、秒に1を入力したらタイマーが181になること', async () => {
+      const minTextBox = wrapper.find('#input-time-min')
+      const secTextBox = wrapper.find('#input-time-sec')
+      await minTextBox.setValue(3)
+      await secTextBox.setValue(1)
+
+      expect(wrapper.vm.timerTime).toBe(181)
+    });
+    test('分のテキストボックスに全角文字を入力したら1なる', async () => {
+      const inputMin = wrapper.find('#input-time-min')
+      await inputMin.setValue('あ１')
+      expect(inputMin.element.value).toBe('1')
+    })
+  });
 
   const isReset = (timer) => {
     const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
