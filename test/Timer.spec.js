@@ -22,36 +22,6 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:01')
   })
 
-  test('秒を設定するテキストボックスが表示されていること', () => {
-    const textBox = wrapper.find('#input-time-sec')
-    expect(textBox.exists()).toBe(true)
-  })
-
-  test('秒のテキストボックスに入力した時間がタイマーに表示されていること', async () => {
-    const textBox = wrapper.find('#input-time-sec')
-    const timer = wrapper.find('#timer')
-    await textBox.setValue(3)
-    expect(timer.text()).toBe('00:00:03')
-  })
-
-  // test('秒のテキストボックスに半角数字以外を入力しても初期値のままになっていること', async () => {
-  //   const textBox = wrapper.find('#input-time-sec')
-  //   console.log(textBox2.element.value, "++++L+++++")
-  //   expect(textBox.element.value).toBe('')
-  // })
-  test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
-    const textBox = wrapper.find('#input-time-sec')
-    await textBox.setValue('あ１')
-    expect(textBox.element.value).toBe('1')
-  })
-
-  test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
-    const textBox = wrapper.find('#input-time-sec')
-    const timer = wrapper.find('#timer')
-    await textBox.setValue(60)
-    expect(timer.text()).toBe('00:00:59')
-  })
-
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
     wrapper.vm.timerTime = 3
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
@@ -72,33 +42,58 @@ describe('Timer', () => {
     expect(timer.text()).toBe('00:00:00')
   })
 
-  test('スタートボタンが表示されていること', () => {
-    const startButton = wrapper.find('#start-button')
-    expect(startButton.exists()).toBe(true)
-  })
+  describe('スタートボタン', () => {
+    test('スタートボタンが表示されていること', () => {
+      const startButton = wrapper.find('#start-button')
+      expect(startButton.exists()).toBe(true)
+    })
 
-  test('スタートボタンを押すとタイマーがスタートすること', () => {
-    const startButton = wrapper.find('#start-button')
-    wrapper.vm.setTimer(2)
-    expect(wrapper.vm.$data.started).toBe(false)
-    startButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBe(true)
-  })
+    test('スタートボタンを押すとタイマーがスタートすること', () => {
+      const startButton = wrapper.find('#start-button')
+      wrapper.vm.setTimer(2)
+      expect(wrapper.vm.$data.started).toBe(false)
+      startButton.trigger("click")
+      expect(wrapper.vm.$data.started).toBe(true)
+    })
 
-  test('ストップボタンが表示されていること', () => {
-    const stopButton = wrapper.find('#stop-button')
-    expect(stopButton.exists()).toBe(true)
-  })
+    test('スタートボタンを押すとタイマー完了状態がリセットされること', () => {
+      const startButton = wrapper.find('#start-button')
+      wrapper.vm.$data.timerFinished = true
 
-  test('ストップボタンを押すとタイマーがストップすること', () => {
-    const startButton = wrapper.find('#start-button')
-    const stopButton = wrapper.find('#stop-button')
-    wrapper.vm.setTimer(10)
-    startButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBe(true)
-    stopButton.trigger("click")
-    expect(wrapper.vm.$data.started).toBe(false)
-  })
+      startButton.trigger("click")
+
+      expect(wrapper.vm.$data.timerFinished).toBe(false)
+    })
+
+  });
+
+  describe('ストップボタン', () => {
+    test('ストップボタンが表示されていること', () => {
+      const stopButton = wrapper.find('#stop-button')
+      expect(stopButton.exists()).toBe(true)
+    })
+
+    test('ストップボタンを押すとタイマーがストップすること', () => {
+      const startButton = wrapper.find('#start-button')
+      const stopButton = wrapper.find('#stop-button')
+      wrapper.vm.setTimer(10)
+      startButton.trigger("click")
+      expect(wrapper.vm.$data.started).toBe(true)
+      stopButton.trigger("click")
+      expect(wrapper.vm.$data.started).toBe(false)
+    })
+
+    test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
+      const startButton = wrapper.find('#start-button')
+      const stopButton = wrapper.find('#stop-button')
+      wrapper.vm.setTimer(10)
+
+      await startButton.trigger('click')
+      await stopButton.trigger('click')
+
+      expect(startButton.attributes().disabled).toBe('disabled')
+    })
+  });
 
   test('タイマーがカウントダウンしている間は時間入力のテキストボックスに入力できないようになること', async () => {
     const startButton = wrapper.find('#start-button')
@@ -131,19 +126,21 @@ describe('Timer', () => {
     expect(wrapper.vm.$data.timerFinished).toBe(true)
   })
 
-  test('タイマー完了状態は、メッセージボックスに完了メッセージが表示されていること', async () => {
-    await wrapper.vm.finishTimer()
+  describe('タイマー完了状態', () => {
+    test('タイマー完了状態は、メッセージボックスに完了メッセージが表示されていること', async () => {
+      await wrapper.vm.finishTimer()
 
-    const message = wrapper.find('#message-box')
-    expect(message.text()).toBe('終わったよ！！')
-  })
+      const message = wrapper.find('#message-box')
+      expect(message.text()).toBe('終わったよ！！')
+    })
 
-  test('タイマー完了状態は、タイマーの背景色が赤になること', async () => {
-    await wrapper.vm.finishTimer()
+    test('タイマー完了状態は、タイマーの背景色が赤になること', async () => {
+      await wrapper.vm.finishTimer()
 
-    const timer = wrapper.find('#timer')
-    expect(timer.attributes().class.split(' ').includes('bg-red-200')).toBe(true)
-  })
+      const timer = wrapper.find('#timer')
+      expect(timer.attributes().class.split(' ').includes('bg-red-200')).toBe(true)
+    })
+  });
 
   test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
     wrapper.vm.$data.timerFinished = false
@@ -153,15 +150,6 @@ describe('Timer', () => {
       expect(message.exists()).toBe(false)
       done()
     })
-  })
-
-  test('スタートボタンを押すとタイマー完了状態がリセットされること', () => {
-    const startButton = wrapper.find('#start-button')
-    wrapper.vm.$data.timerFinished = true
-
-    startButton.trigger("click")
-
-    expect(wrapper.vm.$data.timerFinished).toBe(false)
   })
 
   test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
@@ -186,17 +174,6 @@ describe('Timer', () => {
     expect(isReset(wrapper)).toBe(true)
   })
 
-  test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
-    const startButton = wrapper.find('#start-button')
-    const stopButton = wrapper.find('#stop-button')
-    wrapper.vm.setTimer(10)
-
-    await startButton.trigger('click')
-    await stopButton.trigger('click')
-
-    expect(startButton.attributes().disabled).toBe('disabled')
-  })
-
   test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
     const startButton = wrapper.find('#start-button')
     wrapper.vm.timerTime = 0
@@ -205,17 +182,50 @@ describe('Timer', () => {
     expect(wrapper.vm.started).toBe(false)
   })
 
-  test('タイマー終了サウンドがTimerコンポーネントに存在している', () => {
-    expect(wrapper.vm.audio).toBeTruthy()
-  })
+  describe('タイマーサウンド', () => {
+    test('タイマー終了サウンドがTimerコンポーネントに存在している', () => {
+      expect(wrapper.vm.audio).toBeTruthy()
+    })
 
-  test('タイマー終了時に終了サウンドが再生される', async () => {
-    const finishSoundSpy = jest.spyOn(wrapper.vm.audio, 'play')
-    wrapper.find('#start-button').trigger('click')
-    await sleep(1100)
-    expect(finishSoundSpy).toHaveBeenCalled()
-    finishSoundSpy.mockRestore()
-  })
+    test('タイマー終了時に終了サウンドが再生される', async () => {
+      const finishSoundSpy = jest.spyOn(wrapper.vm.audio, 'play')
+      wrapper.find('#start-button').trigger('click')
+      await sleep(1100)
+      expect(finishSoundSpy).toHaveBeenCalled()
+      finishSoundSpy.mockRestore()
+    })
+  });
+  describe('秒のテキストボックス', () => {
+    test('秒を設定するテキストボックスが表示されていること', () => {
+      const textBox = wrapper.find('#input-time-sec')
+      expect(textBox.exists()).toBe(true)
+    })
+
+    test('秒のテキストボックスに入力した時間がタイマーに表示されていること', async () => {
+      const textBox = wrapper.find('#input-time-sec')
+      const timer = wrapper.find('#timer')
+      await textBox.setValue(3)
+      expect(timer.text()).toBe('00:00:03')
+    })
+
+    // test('秒のテキストボックスに半角数字以外を入力しても初期値のままになっていること', async () => {
+    //   const textBox = wrapper.find('#input-time-sec')
+    //   console.log(textBox2.element.value, "++++L+++++")
+    //   expect(textBox.element.value).toBe('')
+    // })
+    test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
+      const textBox = wrapper.find('#input-time-sec')
+      await textBox.setValue('あ１')
+      expect(textBox.element.value).toBe('1')
+    })
+
+    test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
+      const textBox = wrapper.find('#input-time-sec')
+      const timer = wrapper.find('#timer')
+      await textBox.setValue(60)
+      expect(timer.text()).toBe('00:00:59')
+    })
+  });
 
   describe('分のテキストボックス', () => {
     test('分を設定するテキストボックスが表示される', () => {
