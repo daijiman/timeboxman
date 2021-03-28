@@ -27,11 +27,6 @@ describe('Timer', () => {
     expect(textBox.exists()).toBe(true)
   })
 
-  test('分を設定するテキストボックスが表示されていること', () => {
-    const textBox = wrapper.find('#input-time-min')
-    expect(textBox.exists()).toBe(true)
-  })
-
   test('秒のテキストボックスに入力した時間がタイマーに表示されていること', async () => {
     const textBox = wrapper.find('#input-time-sec')
     const timer = wrapper.find('#timer')
@@ -223,11 +218,15 @@ describe('Timer', () => {
   })
 
   describe('分のテキストボックス', () => {
+    test('分を設定するテキストボックスが表示されていること', () => {
+      const inputMin = wrapper.find('#input-time-min')
+      expect(inputMin.exists()).toBe(true)
+    })
     test('分のテキストボックスに3、秒に1を入力したらタイマーが181になること', async () => {
-      const minTextBox = wrapper.find('#input-time-min')
-      const secTextBox = wrapper.find('#input-time-sec')
-      await minTextBox.setValue(3)
-      await secTextBox.setValue(1)
+      const inputMin = wrapper.find('#input-time-min')
+      const inputSec = wrapper.find('#input-time-sec')
+      await inputMin.setValue(3)
+      await inputSec.setValue(1)
 
       expect(wrapper.vm.timerTime).toBe(181)
     });
