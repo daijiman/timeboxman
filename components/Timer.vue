@@ -10,8 +10,9 @@
     </div>
     <input
       id="input-time-min"
-      class="border rounded text-center w-8"
       v-model="inputMin"
+      class="border rounded text-center w-8"
+      :disabled="started"
     />
     min
     <input

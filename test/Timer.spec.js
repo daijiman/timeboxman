@@ -234,6 +234,13 @@ describe('Timer', () => {
       const inputMin = wrapper.find('#input-time-min')
       await inputMin.setValue('あ１')
       expect(inputMin.element.value).toBe('1')
+    });
+    test('タイマーがカウントダウンしている間は分のテキストボックスに入力できないようになる', async () => {
+      const startButton = wrapper.find('#start-button')
+      wrapper.vm.setTimer(10)
+      await startButton.trigger("click")
+      const inputMin = wrapper.find('#input-time-min')
+      expect(inputMin.attributes().disabled).toBe("disabled")
     })
   });
 
