@@ -208,11 +208,6 @@ describe('Timer', () => {
       expect(timer.text()).toBe('00:00:03')
     })
 
-    // test('秒のテキストボックスに半角数字以外を入力しても初期値のままになっていること', async () => {
-    //   const textBox = wrapper.find('#input-time-sec')
-    //   console.log(textBox2.element.value, "++++L+++++")
-    //   expect(textBox.element.value).toBe('')
-    // })
     test('時間のテキストボックスに数字を入力するとtrueが返ってくること', async () => {
       const e = {'keyCode': 48} 
       const actual = await wrapper.vm.validate(e)
@@ -225,7 +220,16 @@ describe('Timer', () => {
       await wrapper.vm.validate(keypressEvent)
       expect(spy).toHaveBeenCalled()
     })
-    
+   
+    // TODO spyが動かないけどそのうちテストしたい
+    // test('秒のテキストボックスに入力するとvalidateメソッドが呼ばれる', async () => {
+    //   const inputValidateSpy = jest.spyOn(wrapper.vm, 'validate')
+    //   await wrapper.find('#input-time-sec').trigger('keypress', { key: 'a', keyCode: 64 })
+    //   await sleep(3000)
+    //   expect(inputValidateSpy).toHaveBeenCalled()
+    //   inputValidateSpy.mockRestore()
+    // });
+
     test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
       const textBox = wrapper.find('#input-time-sec')
       await textBox.setValue('あ１')
