@@ -213,6 +213,19 @@ describe('Timer', () => {
     //   console.log(textBox2.element.value, "++++L+++++")
     //   expect(textBox.element.value).toBe('')
     // })
+    test('時間のテキストボックスに数字を入力するとtrueが返ってくること', async () => {
+      const e = {'keyCode': 48} 
+      const actual = await wrapper.vm.validate(e)
+      expect(actual).toBe(true)
+    })
+
+    test('時間のテキストボックスに数字以外を入力するとpreventDefaultが呼ばれていること', async () => {
+      const keypressEvent = {keyCode: 100, preventDefault: function(){}}
+      const spy = jest.spyOn(keypressEvent, 'preventDefault' )
+      await wrapper.vm.validate(keypressEvent)
+      expect(spy).toHaveBeenCalled()
+    })
+    
     test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
       const textBox = wrapper.find('#input-time-sec')
       await textBox.setValue('あ１')
