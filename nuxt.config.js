@@ -1,4 +1,7 @@
 export default {
+  env: {
+    API_BASE_URL: process.env.API_BASE_URL || 'http://localhost:3001/',
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 

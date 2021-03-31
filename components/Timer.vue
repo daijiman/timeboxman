@@ -74,7 +74,7 @@ export default Vue.extend({
     };
   },
   mounted: function () {
-    this.socket = io("ws://localhost:3001");
+    this.socket = io(process.env.API_BASE_URL);
     this.socket.on("started", (data) => {
       console.log("recieved : started");
       if (data.started) {
