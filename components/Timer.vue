@@ -106,9 +106,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    setInputSec(event) {
-      this.inputTime = event.target.value;
-    },
     setTimer: function (seconds) {
       this.inputTime = seconds;
     },
