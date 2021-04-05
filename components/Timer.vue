@@ -20,7 +20,7 @@
       v-model="inputSec"
       class="border rounded text-center w-8"
       :disabled="started"
-      @keypress="refuseNonNumericInput"
+      @keypress="ignoreNonNumericInput"
     />
     sec
     <button
@@ -169,7 +169,7 @@ export default Vue.extend({
       const data = { started: false };
       this.socket.emit("stop", data);
     },
-    refuseNonNumericInput: function (e) {
+    ignoreNonNumericInput: function (e) {
       const charCode = e.which ? e.which : e.keyCode;
       if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         e.preventDefault();

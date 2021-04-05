@@ -210,14 +210,14 @@ describe('Timer', () => {
 
     test('時間のテキストボックスに数字を入力するとtrueが返ってくること', async () => {
       const e = { 'keyCode': 48 }
-      const actual = await wrapper.vm.refuseNonNumericInput(e)
+      const actual = await wrapper.vm.ignoreNonNumericInput(e)
       expect(actual).toBe(true)
     })
 
     test('時間のテキストボックスに数字以外を入力するとpreventDefaultが呼ばれていること', async () => {
       const keypressEvent = { keyCode: 100, preventDefault: function () { } }
       const spy = jest.spyOn(keypressEvent, 'preventDefault')
-      await wrapper.vm.refuseNonNumericInput(keypressEvent)
+      await wrapper.vm.ignoreNonNumericInput(keypressEvent)
       expect(spy).toHaveBeenCalled()
     })
 
