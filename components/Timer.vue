@@ -179,7 +179,7 @@ export default Vue.extend({
     },
     validateInputTime: function (time) {
       if (isNaN(time)) {
-        return 1;
+        return '';
       }
       if (60 <= time) {
         return 59;
