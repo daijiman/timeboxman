@@ -209,18 +209,18 @@ describe('Timer', () => {
     })
 
     test('時間のテキストボックスに数字を入力するとtrueが返ってくること', async () => {
-      const e = {'keyCode': 48} 
+      const e = { 'keyCode': 48 }
       const actual = await wrapper.vm.validate(e)
       expect(actual).toBe(true)
     })
 
     test('時間のテキストボックスに数字以外を入力するとpreventDefaultが呼ばれていること', async () => {
-      const keypressEvent = {keyCode: 100, preventDefault: function(){}}
-      const spy = jest.spyOn(keypressEvent, 'preventDefault' )
+      const keypressEvent = { keyCode: 100, preventDefault: function () { } }
+      const spy = jest.spyOn(keypressEvent, 'preventDefault')
       await wrapper.vm.validate(keypressEvent)
       expect(spy).toHaveBeenCalled()
     })
-   
+
     // TODO spyが動かないけどそのうちテストしたい
     // test('秒のテキストボックスに入力するとvalidateメソッドが呼ばれる', async () => {
     //   const inputValidateSpy = jest.spyOn(wrapper.vm, 'validate')
