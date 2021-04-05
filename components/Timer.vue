@@ -177,10 +177,11 @@ export default Vue.extend({
         return true;
       }
     },
-    validateInputTime: function (time) {
-      if (isNaN(time)) {
-        return '';
+    correctInputTime: function (time) {
+      if (isNaN(time) || time < 0) {
+        return "";
       }
+
       if (60 <= time) {
         return 59;
       }
@@ -192,11 +193,11 @@ export default Vue.extend({
   },
   watch: {
     inputSec: function () {
-      this.inputSec = this.validateInputTime(this.inputSec);
+      this.inputSec = this.correctInputTime(this.inputSec);
       this.calcInputTime();
     },
     inputMin: function () {
-      this.inputMin = this.validateInputTime(this.inputMin);
+      this.inputMin = this.correctInputTime(this.inputMin);
       this.calcInputTime();
     },
     inputTime: function () {

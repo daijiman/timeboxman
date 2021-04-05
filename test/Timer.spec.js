@@ -230,7 +230,7 @@ describe('Timer', () => {
     //   inputValidateSpy.mockRestore()
     // });
 
-    test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
+    test('秒のテキストボックスに数字以外を入力したら空文字にする', async () => {
       const textBox = wrapper.find('#input-time-sec')
       await textBox.setValue('あ１')
       expect(textBox.element.value).toBe('')
@@ -243,6 +243,22 @@ describe('Timer', () => {
       expect(timer.text()).toBe('00:00:59')
     })
   });
+
+  describe('correctInputTime', () => {
+    test('数字以外の文字列を渡すと空文字が返ってくる', () => {
+      expect(wrapper.vm.correctInputTime('thisisstring')).toBe('')
+    });
+    test('分、秒は60以上表示させないため、60以上の数字を渡すと59が返ってくる', () => {
+      expect(wrapper.vm.correctInputTime(60)).toBe(59)
+      expect(wrapper.vm.correctInputTime(58)).toBe(58)
+    });
+    test('0以上59以下の数字はそのま表示する', () => {
+      expect(wrapper.vm.correctInputTime(58)).toBe(58)
+    });
+    test('マイナスの場合は空文字を返す', () => {
+      expect(wrapper.vm.correctInputTime(-1)).toBe('')
+    });
+  })
 
   describe('分のテキストボックス', () => {
     test('分を設定するテキストボックスが表示される', () => {
@@ -257,7 +273,7 @@ describe('Timer', () => {
 
       expect(wrapper.vm.timerTime).toBe(181)
     });
-    test('分のテキストボックスに全角文字を入力したら1なる', async () => {
+    test('分のテキストボックスに数字以外を入力したら空文字にする', async () => {
       const inputMin = wrapper.find('#input-time-min')
       await inputMin.setValue('あ１')
       expect(inputMin.element.value).toBe('')
