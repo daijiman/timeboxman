@@ -61,7 +61,6 @@ import Vue from "vue";
 export default Vue.extend({
   data() {
     return {
-      inputTime: 1,
       timerTime: 1,
       inputSec: 1,
       inputMin: 0,
@@ -184,21 +183,18 @@ export default Vue.extend({
       }
       return time;
     },
-    calcInputTime: function () {
-      this.inputTime = Number(this.inputSec) + Number(this.inputMin) * 60;
+    updateTimerTime: function () {
+      this.timerTime = Number(this.inputSec) + Number(this.inputMin) * 60;
     },
   },
   watch: {
     inputSec: function () {
       this.inputSec = this.correctInputTime(this.inputSec);
-      this.calcInputTime();
+      this.updateTimerTime();
     },
     inputMin: function () {
       this.inputMin = this.correctInputTime(this.inputMin);
-      this.calcInputTime();
-    },
-    inputTime: function () {
-      this.timerTime = this.inputTime;
+      this.updateTimerTime();
     },
     started: function () {
       if (this.started) {

@@ -29,7 +29,8 @@ describe('Timer', () => {
 
   test('タイマーを3秒にセットするとタイマーの表示が00:00:03になること', async () => {
     const timer = wrapper.find('#timer')
-    await wrapper.vm.setTimer(3)
+    wrapper.vm.inputSec = 3
+    await wrapper.vm.updateTimerTime()
     expect(timer.text()).toBe('00:00:03')
   })
 
@@ -155,7 +156,7 @@ describe('Timer', () => {
   test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
     const startButton = wrapper.find('#start-button')
 
-    await wrapper.vm.setTimer(1)
+    wrapper.vm.timerTime = 1
     await startButton.trigger("click")
     await sleep(2000)
     const messageBox = wrapper.find('#message-box')
@@ -167,7 +168,7 @@ describe('Timer', () => {
   test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
     const startButton = wrapper.find('#start-button')
     const resetButton = wrapper.find('#reset-button')
-    wrapper.vm.setTimer(10)
+    wrapper.vm.timerTime = 10
     await startButton.trigger('click')
     await resetButton.trigger('click')
 
