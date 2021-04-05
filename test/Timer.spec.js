@@ -233,7 +233,7 @@ describe('Timer', () => {
     test('秒のテキストボックスに全角文字を入力したら初期値に戻ること', async () => {
       const textBox = wrapper.find('#input-time-sec')
       await textBox.setValue('あ１')
-      expect(textBox.element.value).toBe('1')
+      expect(textBox.element.value).toBe('')
     })
 
     test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
@@ -260,7 +260,7 @@ describe('Timer', () => {
     test('分のテキストボックスに全角文字を入力したら1なる', async () => {
       const inputMin = wrapper.find('#input-time-min')
       await inputMin.setValue('あ１')
-      expect(inputMin.element.value).toBe('1')
+      expect(inputMin.element.value).toBe('')
     });
     test('タイマーがカウントダウンしている間は分のテキストボックスに入力できないようになる', async () => {
       const startButton = wrapper.find('#start-button')
