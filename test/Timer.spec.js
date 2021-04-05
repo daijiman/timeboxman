@@ -37,7 +37,7 @@ describe('Timer', () => {
   const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
   test('2秒経ったらタイマーが0になること', async () => {
     const timer = wrapper.find('#timer')
-    wrapper.vm.setTimer(2)
+    wrapper.vm.timerTime = 2
     wrapper.vm.startTimer()
     await sleep(3000)
     expect(timer.text()).toBe('00:00:00')
@@ -51,7 +51,7 @@ describe('Timer', () => {
 
     test('スタートボタンを押すとタイマーがスタートすること', () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setTimer(2)
+      wrapper.vm.timerTime = 2
       expect(wrapper.vm.$data.started).toBe(false)
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
@@ -77,7 +77,7 @@ describe('Timer', () => {
     test('ストップボタンを押すとタイマーがストップすること', () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.setTimer(10)
+      wrapper.vm.timerTime = 10
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
       stopButton.trigger("click")
@@ -87,7 +87,7 @@ describe('Timer', () => {
     test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.setTimer(10)
+      wrapper.vm.timerTime = 10
 
       await startButton.trigger('click')
       await stopButton.trigger('click')
@@ -98,7 +98,7 @@ describe('Timer', () => {
 
   test('タイマーがカウントダウンしている間は時間入力のテキストボックスに入力できないようになること', async () => {
     const startButton = wrapper.find('#start-button')
-    wrapper.vm.setTimer(10)
+    wrapper.vm.timerTime = 10
     await startButton.trigger("click")
     const inputTime = wrapper.find('#input-time-sec')
     expect(inputTime.attributes().disabled).toBe("disabled")
@@ -120,7 +120,7 @@ describe('Timer', () => {
   })
 
   test('カウントダウンがゼロになったらタイマー完了状態になること', async () => {
-    await wrapper.vm.setTimer(1)
+    wrapper.vm.timerTime = 1
     await wrapper.vm.startTimer()
     await sleep(2000)
 
@@ -281,7 +281,7 @@ describe('Timer', () => {
     });
     test('タイマーがカウントダウンしている間は分のテキストボックスに入力できないようになる', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setTimer(10)
+      wrapper.vm.timerTime = 10
       await startButton.trigger("click")
       const inputMin = wrapper.find('#input-time-min')
       expect(inputMin.attributes().disabled).toBe("disabled")
@@ -289,9 +289,10 @@ describe('Timer', () => {
   });
 
   const isReset = (timer) => {
-    const { inputTime, timerTime, started, timerFinished, message } = timer.vm.$data
+    const { timerTime, started, timerFinished, message } = timer.vm.$data
+    const motoTime = Number(timer.vm.inputSec) + Number(timer.vm.inputMin) * 60;
     if (
-      inputTime === timerTime &&
+      timerTime === motoTime &&
       timerFinished === false &&
       message === '' &&
       started === false

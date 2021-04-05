@@ -105,9 +105,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    setTimer: function (seconds) {
-      this.inputTime = seconds;
-    },
     get0PadNumber: function (number, length) {
       return number.toString().padStart(length, "0");
     },
@@ -150,7 +147,7 @@ export default Vue.extend({
     },
     resetTimer: function () {
       this.started = false;
-      this.timerTime = this.inputTime;
+      this.updateTimerTime();
       this.timerFinished = false;
       this.message = "";
       this.audio.pause();
