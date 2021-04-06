@@ -1,13 +1,10 @@
 <template>
   <div>
     <h1 id="title">Timeboxman</h1>
-    <div
-      id="timer"
-      class="border rounded shadow-lg m-5 p-3 text-6xl min-w-xs max-w-xs mx-auto"
-      :class="{ 'bg-red-200': timerFinished }"
-    >
-      {{ getFormattedTime }}
-    </div>
+    <TimeDisplay
+      :formattedTime="getFormattedTime"
+      :timerFinished="timerFinished"
+    />
     <input
       id="input-time-min"
       v-model="inputMin"
