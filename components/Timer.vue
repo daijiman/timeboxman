@@ -127,7 +127,7 @@ export default Vue.extend({
     },
     preventStartingTimer: async function () {
       this.startButtonDisabled = true;
-      await this.sleep(1000);
+      await this.sleep(500);
       this.startButtonDisabled = false;
     },
     finishTimer: function () {
