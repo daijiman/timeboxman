@@ -17,11 +17,6 @@ describe('Timer', () => {
     expect(div.text()).toBe('Timeboxman')
   })
 
-  test('1秒のタイマーが表示されていること', () => {
-    const timer = wrapper.find('#timer')
-    expect(timer.text()).toBe('00:00:01')
-  })
-
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
     wrapper.vm.timerTime = 3
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
