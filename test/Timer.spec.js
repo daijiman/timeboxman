@@ -23,7 +23,9 @@ describe('Timer', () => {
   })
 
   test('タイマーを3秒にセットするとタイマーの表示が00:00:03になること', async () => {
-    const timer = wrapper.find('#timer')
+    // const timer = wrapper.find('#timer')
+    console.log('>>>>>>>' + wrapper.vm.$refs.timeDisplay.$props)
+    const timer = wrapper.vm.$refs.timeDisplay.$emit('getTime')
     wrapper.vm.inputSec = 3
     await wrapper.vm.updateTimerTime()
     expect(timer.text()).toBe('00:00:03')

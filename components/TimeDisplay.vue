@@ -17,5 +17,17 @@ export default Vue.extend({
   data() {
     return {};
   },
+  computed: {
+    param: {
+      get: function () {
+        return this.props.formated;
+      },
+    },
+  },
+  methods: {
+    getTime: function () {
+      return this.find("#tiemr").text();
+    },
+  },
 });
 </script>

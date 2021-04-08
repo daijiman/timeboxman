@@ -2,6 +2,7 @@
   <div>
     <h1 id="title">Timeboxman</h1>
     <TimeDisplay
+      ref="timeDisplay"
       :formattedTime="getFormattedTime"
       :timerFinished="timerFinished"
     />

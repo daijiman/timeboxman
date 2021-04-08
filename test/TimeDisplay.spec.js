@@ -16,4 +16,7 @@ describe('TimerDisplay#', () => {
     const timer = wrapper.find('#timer')
     expect(timer.text()).toBe('00:00:01')
   })
+  test('should ', () => {
+    expect(wrapper.getTime()).toBe('00:00:01')
+  });
 });
