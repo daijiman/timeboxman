@@ -91,3 +91,6 @@ sw.*
 
 #VS Code
 .vscode
+
+/cypress/vidoes
+/cypress/screenshots
