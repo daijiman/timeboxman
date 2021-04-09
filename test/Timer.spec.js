@@ -1,11 +1,15 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
 
 describe('Timer', () => {
   let wrapper;
   beforeEach(() => {
-    wrapper = mount(Timer)
+    wrapper = shallowMount(Timer, {
+      stubs: {
+        TimeDisplay: true
+      }
+    })
   });
 
   test('is a Vue instance', () => {
