@@ -23,14 +23,6 @@ describe('Timer', () => {
   })
 
   const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
-  test('2秒経ったらタイマーが0になること', async () => {
-    const timer = wrapper.find('#timer')
-    wrapper.vm.timerTime = 2
-    wrapper.vm.startTimer()
-    await sleep(3000)
-    expect(timer.text()).toBe('00:00:00')
-  })
-
   describe('スタートボタン', () => {
     test('スタートボタンが表示されていること', () => {
       const startButton = wrapper.find('#start-button')
@@ -121,13 +113,6 @@ describe('Timer', () => {
 
       const message = wrapper.find('#message-box')
       expect(message.text()).toBe('終わったよ！！')
-    })
-
-    test('タイマー完了状態は、タイマーの背景色が赤になること', async () => {
-      await wrapper.vm.finishTimer()
-
-      const timer = wrapper.find('#timer')
-      expect(timer.attributes().class.split(' ').includes('bg-red-200')).toBe(true)
     })
   });
 
@@ -224,12 +209,6 @@ describe('Timer', () => {
       expect(textBox.element.value).toBe('')
     })
 
-    test('秒のテキストボックスに60を入力したとき59秒へ自動的に変わること', async () => {
-      const textBox = wrapper.find('#input-time-sec')
-      const timer = wrapper.find('#timer')
-      await textBox.setValue(60)
-      expect(timer.text()).toBe('00:00:59')
-    })
   });
 
   describe('correctInputTime', () => {
