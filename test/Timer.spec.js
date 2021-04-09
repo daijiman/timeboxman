@@ -218,10 +218,16 @@ describe('Timer', () => {
     })
 
     // TODO spyが動かないけどそのうちテストしたい
-    // test('秒のテキストボックスに入力するとvalidateメソッドが呼ばれる', async () => {
-    //   const inputValidateSpy = jest.spyOn(wrapper.vm, 'validate')
-    //   await wrapper.find('#input-time-sec').trigger('keypress', { key: 'a', keyCode: 64 })
+    // そもそも trigger を使った keydown イベントで数字入力が動いていない
+    // https://github.com/vuejs/vue-test-utils/issues/484
+    // Selenium などの e2e テストツールを使わないとテストできなそう
+    // test('秒のテキストボックスに入力するとignoreNonNumericメソッドが呼ばれる', async () => {
+    //   const inputValidateSpy = jest.spyOn(wrapper.vm, 'ignoreNonNumericInput')
+    //   const inputSec = wrapper.find('#input-time-sec')
+    //   inputSec.setValue(9)
+    //   await inputSec.trigger('keypress', { key: 'a' })
     //   await sleep(3000)
+    //   expect(wrapper.vm.inputSec).toBe(11)
     //   expect(inputValidateSpy).toHaveBeenCalled()
     //   inputValidateSpy.mockRestore()
     // });
