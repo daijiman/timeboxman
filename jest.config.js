@@ -19,5 +19,6 @@ module.exports = {
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue'
   ],
+  testPathIgnorePatterns: ["test/e2e"],
   setupFiles: ["./jest.setup.js"]
 }

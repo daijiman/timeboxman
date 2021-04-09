@@ -190,13 +190,6 @@ describe('Timer', () => {
       expect(textBox.exists()).toBe(true)
     })
 
-    test('秒のテキストボックスに入力した時間がタイマーに表示されていること', async () => {
-      const textBox = wrapper.find('#input-time-sec')
-      const timer = wrapper.find('#timer')
-      await textBox.setValue(3)
-      expect(timer.text()).toBe('00:00:03')
-    })
-
     test('時間のテキストボックスに数字を入力するとtrueが返ってくること', async () => {
       const e = { 'keyCode': 48 }
       const actual = await wrapper.vm.ignoreNonNumericInput(e)
