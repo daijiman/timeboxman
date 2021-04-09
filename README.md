@@ -18,3 +18,13 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## e2e Test
+```bash
+
+# e2eテストをヘッドレスで実行する場合のコマンド
+$ npm run test:e2e
+
+# e2e テストをブラウザを表示しながらテストする場合のコマンド
+$ npm run test:e2e:open
+```
