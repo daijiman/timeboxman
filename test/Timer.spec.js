@@ -22,13 +22,6 @@ describe('Timer', () => {
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
   })
 
-  test('タイマーを3秒にセットするとタイマーの表示が00:00:03になること', async () => {
-    const timer = wrapper.find('#timer')
-    wrapper.vm.inputSec = 3
-    await wrapper.vm.updateTimerTime()
-    expect(timer.text()).toBe('00:00:03')
-  })
-
   const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
   test('2秒経ったらタイマーが0になること', async () => {
     const timer = wrapper.find('#timer')
