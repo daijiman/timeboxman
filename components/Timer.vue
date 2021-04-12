@@ -40,6 +40,11 @@
     <button id="reset-button" class="border rounded p-1" @click="resetTimer">
       RESET
     </button>
+    <input
+      id="room-id"
+      v-model="roomId"
+      class="border rounded text-center w-16"
+    />
     <div
       id="message-box"
       v-if="timerFinished"
@@ -48,6 +53,9 @@
     >
       {{ message }}
     </div>
+    <button id="room-button" class="border rounded p-1" @click="sendGetRoomId">
+      Room
+    </button>
   </div>
 </template>
 
@@ -61,6 +69,7 @@ export default Vue.extend({
       timerTime: 1,
       inputSec: 1,
       inputMin: 0,
+      roomId: "default",
       started: false,
       timerFinished: false,
       message: "",
@@ -82,6 +91,10 @@ export default Vue.extend({
     this.socket.on("stop", (data) => {
       console.log("recieved : stop");
       this.stopTimer();
+    });
+    this.socket.on("recieveRoomId", (data) => {
+      console.log("recieved : roomId :" + data.roomId);
+      this.roomId = data.roomId;
     });
   },
   computed: {
@@ -151,13 +164,22 @@ export default Vue.extend({
       this.preventStartingTimer();
     },
     sendStarted: function () {
-      const data = { started: this.started, timerTime: this.timerTime };
-      this.socket.emit("started", data);
+      this.socket.emit("started", this.getTimerState());
     },
     sendStop: function () {
       console.log("send stop");
-      const data = { started: false };
-      this.socket.emit("stop", data);
+      this.socket.emit("stop", this.getTimerState());
+    },
+    sendGetRoomId: function () {
+      console.log("send getRoomId");
+      this.socket.emit("getRoomId");
+    },
+    getTimerState: function () {
+      return {
+        started: this.started,
+        timerTime: this.timerTime,
+        roomId: this.roomId,
+      };
     },
     ignoreNonNumericInput: function (e) {
       const charCode = e.which ? e.which : e.keyCode;

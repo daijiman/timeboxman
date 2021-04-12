@@ -243,6 +243,12 @@ describe('Timer', () => {
     })
   });
 
+  // test('default の roomId で接続する', () => {
+  //   const socketEmitSpy = jest.spyOn(Timer.socket, 'emit')
+  //   expect(socketEmitSpy).toHaveBeenCalled()
+  //   socketEmitSpy.mockRestore()
+  // });
+
   const isReset = (timer) => {
     const { timerTime, started, timerFinished, message } = timer.vm.$data
     const motoTime = Number(timer.vm.inputSec) + Number(timer.vm.inputMin) * 60;
