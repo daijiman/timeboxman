@@ -76,6 +76,7 @@ export default Vue.extend({
       startButtonDisabled: false,
       audio: new Audio(finishedSound),
       socket: "",
+      socketId: "",
     };
   },
   mounted: function () {
@@ -96,6 +97,10 @@ export default Vue.extend({
       console.log("recieved : roomId :" + data.roomId);
       this.roomId = data.roomId;
     });
+    this.socket.on("receiveSocketId", (data) => {
+      console.log("******", JSON.stringify(data))
+      this.socketId = data.socketId;
+    })
   },
   computed: {
     getFormattedTime: function () {
@@ -202,6 +207,10 @@ export default Vue.extend({
     updateTimerTime: function () {
       this.timerTime = Number(this.inputSec) + Number(this.inputMin) * 60;
     },
+    getSocketId: async function () {
+      await this.socket.emit("getSocketId");
+      return this.socketId;
+    }
   },
   watch: {
     inputSec: function () {
