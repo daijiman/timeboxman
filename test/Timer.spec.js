@@ -243,13 +243,6 @@ describe('Timer', () => {
     })
   });
 
-  describe('サーバとの接続', () => {
-    test('サーバーからsocketIDを取得し20桁の文字列であること', async () => {
-      const socketId = await wrapper.vm.getSocketId()
-      expect(socketId).toHaveLength(20)
-    })
-  });
-
   // test('default の roomId で接続する', () => {
   //   const socketEmitSpy = jest.spyOn(Timer.socket, 'emit')
   //   expect(socketEmitSpy).toHaveBeenCalled()

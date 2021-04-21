@@ -1,4 +1,16 @@
 describe('タイマーの表示', () => {
+  it('Roomボタンをクリックしたら#room-id テキストボックスに10文字のRoomIdが入る', () => {
+    cy.visit('/')
+    cy.get('#room-button')
+      .click()
+    cy.get('#room-id').should((hoge) => {
+      console.log(hoge)
+      expect(hoge).to.have.lengthOf(10)
+    })
+    // cy.get('#room-id')
+    //   .invoke('text')
+    //   .should('have.length', 10)
+  })
   it('初期アクセス時にタイマーの表示が00:00:01になっている', () => {
     cy.visit('/')
     cy.get('#timer').should('contain', "00:00:01")

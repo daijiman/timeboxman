@@ -82,7 +82,7 @@ export default Vue.extend({
   mounted: function () {
     this.socket = io(process.env.API_BASE_URL);
     this.socket.on("started", (data) => {
-      console.log("recieved : started");
+      console.log("received : started");
       if (data.started) {
         this.resetTimer();
         this.timerTime = data.timerTime;
@@ -90,17 +90,13 @@ export default Vue.extend({
       }
     });
     this.socket.on("stop", (data) => {
-      console.log("recieved : stop");
+      console.log("received : stop");
       this.stopTimer();
     });
-    this.socket.on("recieveRoomId", (data) => {
-      console.log("recieved : roomId :" + data.roomId);
+    this.socket.on("receiveRoomId", (data) => {
+      console.log("received : roomId :" + data.roomId);
       this.roomId = data.roomId;
     });
-    this.socket.on("receiveSocketId", (data) => {
-      console.log("******", JSON.stringify(data))
-      this.socketId = data.socketId;
-    })
   },
   computed: {
     getFormattedTime: function () {
@@ -207,10 +203,6 @@ export default Vue.extend({
     updateTimerTime: function () {
       this.timerTime = Number(this.inputSec) + Number(this.inputMin) * 60;
     },
-    getSocketId: async function () {
-      await this.socket.emit("getSocketId");
-      return this.socketId;
-    }
   },
   watch: {
     inputSec: function () {
