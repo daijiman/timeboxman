@@ -241,6 +241,7 @@ describe('Timer', () => {
       const inputMin = wrapper.find('#input-time-min')
       expect(inputMin.attributes().disabled).toBe("disabled")
     })
+
   });
 
   // test('default の roomId で接続する', () => {

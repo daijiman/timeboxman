@@ -1,4 +1,29 @@
 describe('タイマーの表示', () => {
+  it('タイマーにアクセスしたらRoomIdを自動的に取得する', () => {
+    cy.visit('/')
+    cy.get('#room-id').should(($roomIdInput) => {
+      const val = $roomIdInput.val()
+      expect(val).to.have.lengthOf(10)
+    })
+  })
+  it('Roomボタンをクリックしたら#room-id テキストボックスに10文字のRoomIdが入る', () => {
+    cy.visit('/')
+    cy.get('#room-button')
+      .click()
+    cy.get('#room-id').should(($roomIdInput) => {
+      const val = $roomIdInput.val()
+      expect(val).to.have.lengthOf(10)
+    })
+  })
+  it('Set Roomボタンをクリックすると、指定したRoomIdの部屋に入る ', () => {
+    cy.visit('/')
+    cy.wait(1000)
+    cy.get('#room-id')
+      .clear()
+      .type('abcdefghij')
+    cy.get('#set-room-id-button').click()
+    cy.get('#message-box2').should('contain', 'Room[abcdefghij]に入ったよ')
+  });
   it('初期アクセス時にタイマーの表示が00:00:01になっている', () => {
     cy.visit('/')
     cy.get('#timer').should('contain', "00:00:01")

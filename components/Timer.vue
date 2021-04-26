@@ -40,22 +40,42 @@
     <button id="reset-button" class="border rounded p-1" @click="resetTimer">
       RESET
     </button>
-    <input
-      id="room-id"
-      v-model="roomId"
-      class="border rounded text-center w-16"
-    />
-    <div
-      id="message-box"
-      v-if="timerFinished"
-      class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
-      @click="resetTimer"
-    >
-      {{ message }}
+    <div class="m-10">
+      <input
+        id="room-id"
+        v-model="roomId"
+        class="border rounded text-center w-36"
+      />
+      <div
+        id="message-box"
+        v-if="timerFinished"
+        class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
+        @click="resetTimer"
+      >
+        {{ message }}
+      </div>
+      <div
+        id="message-box2"
+        v-if="message2"
+        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
+      >
+        {{ message2 }}
+      </div>
+      <button
+        id="room-button"
+        class="border rounded p-1"
+        @click="sendGetRoomId"
+      >
+        Room
+      </button>
+      <button
+        id="set-room-id-button"
+        class="border rounded p-1"
+        @click="sendSetRoomId"
+      >
+        Set Room
+      </button>
     </div>
-    <button id="room-button" class="border rounded p-1" @click="sendGetRoomId">
-      Room
-    </button>
   </div>
 </template>
 
@@ -76,12 +96,14 @@ export default Vue.extend({
       startButtonDisabled: false,
       audio: new Audio(finishedSound),
       socket: "",
+      socketId: "",
+      message2: "",
     };
   },
   mounted: function () {
     this.socket = io(process.env.API_BASE_URL);
     this.socket.on("started", (data) => {
-      console.log("recieved : started");
+      console.log("received : started");
       if (data.started) {
         this.resetTimer();
         this.timerTime = data.timerTime;
@@ -89,13 +111,20 @@ export default Vue.extend({
       }
     });
     this.socket.on("stop", (data) => {
-      console.log("recieved : stop");
+      console.log("received : stop");
       this.stopTimer();
     });
-    this.socket.on("recieveRoomId", (data) => {
-      console.log("recieved : roomId :" + data.roomId);
+    this.socket.on("receiveRoomId", (data) => {
+      console.log("received : roomId :" + data.roomId);
       this.roomId = data.roomId;
     });
+    this.socket.on("setRoomIdResult", (data) => {
+      console.log("setRoomIdResult");
+      if (data.result) {
+        this.setMessage(`Room[${data.roomId}]に入ったよ`);
+      }
+    });
+    this.socket.emit("getRoomId");
   },
   computed: {
     getFormattedTime: function () {
@@ -115,6 +144,13 @@ export default Vue.extend({
     },
   },
   methods: {
+    setMessage: async function (message, disappear = true) {
+      this.message2 = message;
+      if (disappear) {
+        await this.sleep(2000);
+        this.message2 = "";
+      }
+    },
     get0PadNumber: function (number, length) {
       return number.toString().padStart(length, "0");
     },
@@ -173,6 +209,10 @@ export default Vue.extend({
     sendGetRoomId: function () {
       console.log("send getRoomId");
       this.socket.emit("getRoomId");
+    },
+    sendSetRoomId: function () {
+      console.log("send setRoomId");
+      this.socket.emit("setRoomId", { roomId: this.roomId });
     },
     getTimerState: function () {
       return {
