@@ -148,8 +148,11 @@ export default Vue.extend({
       this.message2 = message;
       if (disappear) {
         await this.sleep(2000);
-        this.message2 = "";
+        this.hideMessageBox2()
       }
+    },
+    hideMessageBox2: function () {
+      this.message2 = "";
     },
     get0PadNumber: function (number, length) {
       return number.toString().padStart(length, "0");
