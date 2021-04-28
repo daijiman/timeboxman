@@ -192,12 +192,13 @@ export default Vue.extend({
       this.audio.play();
     },
     countDown: async function () {
+      let remainingTime = 0;
       while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
         if (!this.started) {
           break;
         }
-        let remainingTime = this.finishTime - new Date().getTime();
+        remainingTime = this.finishTime - new Date().getTime();
         this.timerTime = Math.floor(remainingTime / 1000);
       }
     },
