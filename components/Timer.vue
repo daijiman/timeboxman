@@ -98,6 +98,7 @@ export default Vue.extend({
       socket: "",
       socketId: "",
       message2: "",
+      finishTime: "",
     };
   },
   mounted: function () {
@@ -148,7 +149,7 @@ export default Vue.extend({
       this.message2 = message;
       if (disappear) {
         await this.sleep(2000);
-        this.hideMessageBox2()
+        this.hideMessageBox2();
       }
     },
     hideMessageBox2: function () {
@@ -164,8 +165,13 @@ export default Vue.extend({
       if (this.timerTime < 1) {
         return;
       }
+      this.finishTime = this.getFinishTime(this.timerTime);
       this.started = true;
       this.timerFinished = false;
+    },
+    getFinishTime(duration) {
+      const currentDate = new Date();
+      return currentDate.setSeconds(currentDate.getSeconds() + duration);
     },
     stopTimer: async function (needEmit = false) {
       this.started = false;
@@ -191,7 +197,8 @@ export default Vue.extend({
         if (!this.started) {
           break;
         }
-        this.timerTime--;
+        let remainingTime = this.finishTime - new Date().getTime();
+        this.timerTime = Math.floor(remainingTime / 1000);
       }
     },
     resetTimer: function () {
@@ -222,6 +229,7 @@ export default Vue.extend({
         started: this.started,
         timerTime: this.timerTime,
         roomId: this.roomId,
+        finishTime: this.finishTime,
       };
     },
     ignoreNonNumericInput: function (e) {
