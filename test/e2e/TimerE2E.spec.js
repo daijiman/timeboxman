@@ -1,4 +1,8 @@
-describe('タイマーの表示', () => {
+describe('Room関連', () => {
+  it('/?roomid=xxx-xxx-xxx にアクセスしたらRoomId xxx-xxx-xxx に入る', () => {
+    cy.visit('/?roomid=xxx-xxx-xxx')
+    cy.get('#room-id').should('have.value', 'xxx-xxx-xxx')
+  });
   it('タイマーにアクセスしたらRoomIdを自動的に取得する', () => {
     cy.visit('/')
     cy.get('#room-id').should(($roomIdInput) => {
@@ -24,6 +28,8 @@ describe('タイマーの表示', () => {
     cy.get('#set-room-id-button').click()
     cy.get('#message-box2').should('contain', 'Room[abcdefghij]に入ったよ')
   });
+})
+describe('タイマーの表示', () => {
   it('初期アクセス時にタイマーの表示が00:00:01になっている', () => {
     cy.visit('/')
     cy.get('#timer').should('contain', "00:00:01")

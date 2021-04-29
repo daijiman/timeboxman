@@ -54,13 +54,6 @@
       >
         {{ message }}
       </div>
-      <div
-        id="message-box2"
-        v-if="message2"
-        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
-      >
-        {{ message2 }}
-      </div>
       <button
         id="room-button"
         class="border rounded p-1"
@@ -75,6 +68,20 @@
       >
         Set Room
       </button>
+      <div
+        id="message-box2"
+        v-if="message2"
+        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
+      >
+        {{ message2 }}
+      </div>
+      <div>
+        <input
+          id="room-url"
+          v-model="roomUrl"
+          class="border rounded text-center w-max"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -99,6 +106,7 @@ export default Vue.extend({
       socketId: "",
       message2: "",
       finishTime: "",
+      roomUrl: "",
     };
   },
   mounted: function () {
@@ -125,7 +133,15 @@ export default Vue.extend({
         this.setMessage(`Room[${data.roomId}]に入ったよ`);
       }
     });
-    this.socket.emit("getRoomId");
+
+    this.joinRoom();
+    this.roomUrl =
+      location.origin +
+      this.$router.resolve({
+        query: {
+          roomid: this.$route.query.roomid,
+        },
+      }).href;
   },
   computed: {
     getFormattedTime: function () {
@@ -145,6 +161,14 @@ export default Vue.extend({
     },
   },
   methods: {
+    joinRoom: function () {
+      if (!this.$route.query.roomid) {
+        this.socket.emit("getRoomId");
+      } else {
+        this.roomId = this.$route.query.roomid;
+        this.sendSetRoomId();
+      }
+    },
     setMessage: async function (message, disappear = true) {
       this.message2 = message;
       if (disappear) {
