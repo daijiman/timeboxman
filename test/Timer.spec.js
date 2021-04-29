@@ -104,9 +104,9 @@ describe('Timer', () => {
   })
 
   test('カウントダウンがゼロになったらタイマー完了状態になること', async () => {
-    wrapper.vm.timerTime = 2
+    wrapper.vm.timerTime = 1
     await wrapper.vm.startTimer()
-    await sleep(2500)
+    await sleep(1000)
 
     expect(wrapper.vm.$data.timerFinished).toBe(true)
   })
@@ -133,7 +133,7 @@ describe('Timer', () => {
   test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
     const startButton = wrapper.find('#start-button')
 
-    wrapper.vm.timerTime = 2
+    wrapper.vm.timerTime = 1
     await startButton.trigger("click")
     await sleep(2000)
     const messageBox = wrapper.find('#message-box')
@@ -167,9 +167,8 @@ describe('Timer', () => {
 
     test('タイマー終了時に終了サウンドが再生される', async () => {
       const finishSoundSpy = jest.spyOn(wrapper.vm.audio, 'play')
-      wrapper.vm.timerTime = 2
       wrapper.find('#start-button').trigger('click')
-      await sleep(2000)
+      await sleep(1100)
       expect(finishSoundSpy).toHaveBeenCalled()
       finishSoundSpy.mockRestore()
     })
