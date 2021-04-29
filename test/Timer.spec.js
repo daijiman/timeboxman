@@ -1,14 +1,18 @@
 import { shallowMount } from '@vue/test-utils'
 import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
+import VueRouter from 'vue-router'
 
 describe('Timer', () => {
   let wrapper;
+  // const router = new VueRouter()
+  const router = { query: jest.fn(), resolve: jest.fn() }
   beforeEach(() => {
     wrapper = shallowMount(Timer, {
       stubs: {
         TimeDisplay: true
-      }
+      },
+      router
     })
   });
 

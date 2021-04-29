@@ -46,14 +46,6 @@
         v-model="roomId"
         class="border rounded text-center w-36"
       />
-      <div
-        id="message-box"
-        v-if="timerFinished"
-        class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
-        @click="resetTimer"
-      >
-        {{ message }}
-      </div>
       <button
         id="room-button"
         class="border rounded p-1"
@@ -68,19 +60,29 @@
       >
         Set Room
       </button>
-      <div
-        id="message-box2"
-        v-if="message2"
-        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
-      >
-        {{ message2 }}
-      </div>
       <div>
         <input
           id="room-url"
           v-model="roomUrl"
           class="border rounded text-center w-max"
         />
+      </div>
+    </div>
+    <div>
+      <div
+        id="message-box"
+        v-if="timerFinished"
+        class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
+        @click="resetTimer"
+      >
+        {{ message }}
+      </div>
+      <div
+        id="message-box2"
+        v-if="message2"
+        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
+      >
+        {{ message2 }}
       </div>
     </div>
   </div>
@@ -135,13 +137,12 @@ export default Vue.extend({
     });
 
     this.joinRoom();
-    this.roomUrl =
-      location.origin +
-      this.$router.resolve({
-        query: {
-          roomid: this.$route.query.roomid,
-        },
-      }).href;
+    this.roomUrl = location.origin;
+    // + this.$router.resolve({
+    //   query: {
+    //     roomid: this.$route.query.roomid,
+    //   },
+    // }).href;
   },
   computed: {
     getFormattedTime: function () {
@@ -162,7 +163,12 @@ export default Vue.extend({
   },
   methods: {
     joinRoom: function () {
-      if (!this.$route.query.roomid) {
+      this.socket.emit("getRoomId");
+      return;
+      if (
+        this.$route.query === undefined &&
+        this.$route.query.roomid === undefined
+      ) {
         this.socket.emit("getRoomId");
       } else {
         this.roomId = this.$route.query.roomid;
@@ -223,7 +229,8 @@ export default Vue.extend({
           break;
         }
         remainingTime = this.finishTime - new Date().getTime();
-        this.timerTime = Math.floor(remainingTime / 1000);
+        this.timerTime =
+          remainingTime < 0 ? 0 : Math.floor(remainingTime / 1000);
       }
     },
     resetTimer: function () {
