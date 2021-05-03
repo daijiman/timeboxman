@@ -1,6 +1,6 @@
 describe('Room関連', () => {
   it('/?roomid=xxx-xxx-xxx にアクセスしたらRoomId xxx-xxx-xxx に入る', () => {
-    cy.visit('/?roomid=xxx-xxx-xxx')
+    cy.visit('/?roomId=xxx-xxx-xxx')
     cy.get('#room-id').should('have.value', 'xxx-xxx-xxx')
   });
   it('タイマーにアクセスしたらRoomIdを自動的に取得する', () => {
