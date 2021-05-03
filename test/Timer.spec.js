@@ -248,8 +248,17 @@ describe('Timer', () => {
       const inputMin = wrapper.find('#input-time-min')
       expect(inputMin.attributes().disabled).toBe("disabled")
     })
-
   });
+
+  // describe('ルームのテスト', () => {
+  //   test('ルームのURLをコピーできていること', async () => {
+  //     this.sleep(3000)
+  //     const roomUrl = wrapper.find('#room-url')
+  //     const copyButton = wrapper.find('#copy-button')
+  //     await copyButton.trigger("click")
+  //     expect(roomUrl.element.value).toBe(window.getSelection().toString())
+  //   })
+  // });
 
   // test('default の roomId で接続する', () => {
   //   const socketEmitSpy = jest.spyOn(Timer.socket, 'emit')

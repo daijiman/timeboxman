@@ -1,3 +1,19 @@
+describe('RoomUrl関連', () => {
+  // it('RoomUrlのコピーボタンを押したら、room-urlのテキストがクリップボードにコピーされる', () => {
+  //   cy.visit('/')
+  //   // cy.get('#copy-button').click();
+  //   cy.get('#room-id').should(($roomUrlInput) => {
+  //     const roomUrl = $roomUrlInput.val();
+  //     expect(roomUrl).to.contain('http')
+  //     // console.log('copy======>', window.getSelection().toString())
+  //     // console.log('roomUrl  ======>', roomUrl)
+  //     // // expect(roomUrl).to.be(window.getSelection().toString())
+  //     // cy.task('getClipboard').should('contain', roomUrl);
+  //     // console.log('>>>>>>>>' + roomUrl)
+  //   })
+  // });
+});
+
 describe('Room関連', () => {
   it('/?roomid=xxx-xxx-xxx にアクセスしたらRoomId xxx-xxx-xxx に入る', () => {
     cy.visit('/?roomId=xxx-xxx-xxx')

@@ -60,13 +60,21 @@
       >
         Set Room
       </button>
-      <div>
+      <div class="m-1">
         <input
           id="room-url"
           v-model="roomUrl"
           class="border rounded text-center w-max"
         />
+        <button
+          id="copy-button"
+          class="border rounded p-1"
+          @click="doCopy"
+        >
+          URLをコピーする
+        </button>
       </div>
+      
     </div>
     <div>
       <div
@@ -92,6 +100,8 @@
 import finishedSound from "~/assets/sound/Warning-Siren01-3.mp3";
 import io from "socket.io-client";
 import Vue from "vue";
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 export default Vue.extend({
   data() {
     return {
@@ -158,6 +168,14 @@ export default Vue.extend({
     },
   },
   methods: {
+    doCopy: function () {
+      const savedThis = this
+      this.$copyText(this.roomUrl).then(function (e) {
+        savedThis.setMessage('コピーできました!!');
+      }, function (e) {
+        savedThis.setMessage('コピーできませんでした😭');
+      })
+    },
     joinRoom: function () {
       if (
         this.$route.query.roomId === undefined
