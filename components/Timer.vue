@@ -136,13 +136,9 @@ export default Vue.extend({
       }
     });
 
+    this.roomUrl = location.href
     this.joinRoom();
-    this.roomUrl = location.origin;
-    // + this.$router.resolve({
-    //   query: {
-    //     roomid: this.$route.query.roomid,
-    //   },
-    // }).href;
+    this.setRoomUrl();
   },
   computed: {
     getFormattedTime: function () {
@@ -163,15 +159,14 @@ export default Vue.extend({
   },
   methods: {
     joinRoom: function () {
-      this.socket.emit("getRoomId");
-      return;
       if (
-        this.$route.query === undefined &&
-        this.$route.query.roomid === undefined
+        this.$route.query.roomId === undefined
       ) {
+        console.log("query なしのときに呼ばれるところ")
         this.socket.emit("getRoomId");
       } else {
-        this.roomId = this.$route.query.roomid;
+        console.log("query ありのときに呼ばれるところ: " + this.$route.query.roomId)
+        this.roomId = this.$route.query.roomId;
         this.sendSetRoomId();
       }
     },
@@ -285,6 +280,13 @@ export default Vue.extend({
     updateTimerTime: function () {
       this.timerTime = Number(this.inputSec) + Number(this.inputMin) * 60;
     },
+    setRoomUrl: function () {
+      // $router.push は await では処理が完了するまでの同期ができず、
+      // 第2引数に完了時のコールバック関数を指定する必要がある
+      this.$router.push({query: { roomId: this.roomId }}, () => {
+        this.roomUrl = location.href;
+      })
+    }
   },
   watch: {
     inputSec: function () {
@@ -306,6 +308,9 @@ export default Vue.extend({
         this.finishTimer();
       }
     },
+    roomId: function () {
+      this.setRoomUrl()
+    }
   },
 });
 </script>

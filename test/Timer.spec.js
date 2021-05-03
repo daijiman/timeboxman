@@ -1,18 +1,21 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
 import VueRouter from 'vue-router'
 
 describe('Timer', () => {
   let wrapper;
-  // const router = new VueRouter()
-  const router = { query: jest.fn(), resolve: jest.fn() }
+  const localVue = createLocalVue()
+  localVue.use(VueRouter)
+  const router = new VueRouter()
+
   beforeEach(() => {
     wrapper = shallowMount(Timer, {
+      localVue,
+      router,
       stubs: {
         TimeDisplay: true
       },
-      router
     })
   });
 
