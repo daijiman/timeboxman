@@ -142,7 +142,7 @@ export default Vue.extend({
     });
     this.socket.on("setRoomIdResult", (data) => {
       console.log("setRoomIdResult");
-      if (data.result) {
+      if (data.result && !this.timerFinished) {
         this.setMessage(`Room[${data.roomId}]に入ったよ`);
       }
     });
