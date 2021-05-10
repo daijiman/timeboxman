@@ -8,15 +8,15 @@ describe('Room関連', () => {
   });
   // it('RoomUrlのコピーボタンを押したら、room-urlのテキストがクリップボードにコピーされる', () => {
   //   cy.visit('/')
-  //   // cy.get('#copy-button').click();
-  //   cy.get('#room-id').should(($roomUrlInput) => {
+  //   cy.get('#copy-button').click();
+  //   cy.get('#room-url').should(($roomUrlInput) => {
   //     const roomUrl = $roomUrlInput.val();
-  //     expect(roomUrl).to.contain('http')
-  //     // console.log('copy======>', window.getSelection().toString())
+  //     console.log("+++++++++++++++++",roomUrl)
+  //     console.log('copy======>', window.getSelection().toString())
   //     // console.log('roomUrl  ======>', roomUrl)
-  //     // // expect(roomUrl).to.be(window.getSelection().toString())
-  //     // cy.task('getClipboard').should('contain', roomUrl);
-  //     // console.log('>>>>>>>>' + roomUrl)
+  //     // expect(roomUrl).to.be(window.getSelection().toString())
+  //     cy.task('getClipboard').should('contain', roomUrl);
+  //     console.log('>>>>>>>>' + roomUrl)
   //   })
   // });
   it('/?roomid=xxx-xxx にアクセスしたらRoomId xxx-xxx に入る', () => {
