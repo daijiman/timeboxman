@@ -233,6 +233,7 @@ export default Vue.extend({
       this.message = "終わったよ！！";
       this.started = false;
       this.audio.play();
+      this.sendSetRoomId();
     },
     countDown: async function () {
       let remainingTime = 0;
