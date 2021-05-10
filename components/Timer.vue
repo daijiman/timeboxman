@@ -45,6 +45,7 @@
         id="room-id"
         v-model="roomId"
         class="border rounded text-center w-36"
+        maxlength="10"
       />
       <button
         id="room-button"

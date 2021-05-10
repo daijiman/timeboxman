@@ -1,4 +1,11 @@
-describe('RoomUrl関連', () => {
+describe('Room関連', () => {
+  it('roomIdに11文字入力しても10文字になること', () => {
+    cy.visit('/')
+    cy.get('#room-id')
+      .clear()
+      .type('abcdefghijk')
+    cy.get('#room-id').should('have.value', 'abcdefghij')
+  });
   // it('RoomUrlのコピーボタンを押したら、room-urlのテキストがクリップボードにコピーされる', () => {
   //   cy.visit('/')
   //   // cy.get('#copy-button').click();
@@ -12,12 +19,9 @@ describe('RoomUrl関連', () => {
   //     // console.log('>>>>>>>>' + roomUrl)
   //   })
   // });
-});
-
-describe('Room関連', () => {
-  it('/?roomid=xxx-xxx-xxx にアクセスしたらRoomId xxx-xxx-xxx に入る', () => {
-    cy.visit('/?roomId=xxx-xxx-xxx')
-    cy.get('#room-id').should('have.value', 'xxx-xxx-xxx')
+  it('/?roomid=xxx-xxx にアクセスしたらRoomId xxx-xxx に入る', () => {
+    cy.visit('/?roomId=xxx-xxx')
+    cy.get('#room-id').should('have.value', 'xxx-xxx')
   });
   it('タイマーにアクセスしたらRoomIdを自動的に取得する', () => {
     cy.visit('/')
