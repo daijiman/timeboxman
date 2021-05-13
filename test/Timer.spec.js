@@ -251,6 +251,32 @@ describe('Timer', () => {
   });
 
   // describe('ルームのテスト', () => {
+  //   test('setRoomした後指定した時間おきにルームに入ること', () => {
+  //     const spy = jest.spyOn(wrapper.vm, 'periodicalSetRoomId');
+  //     await wrapper.vm.periodicalSetRoomId(3);
+  //     await sleep(6000)
+  //     expect(spy).toHaveBeenCalledTimes(2)
+  //   })
+  // });
+
+
+  // periodicalSetRoomId = function(){
+  //   this.setRoomIdInterval = setInterval(function(){
+  //     this.socket.emit("setRoomId", { roomId: this.roomId });
+  //   }, 1000)
+  // }
+
+  // const sendSetRoomId = function () {
+  //   ///....
+  //   periodicalSetRoomId()
+  // } 
+  // const periodicalSetRoomId = async function (second = 5) {
+  //   this.socket.emit("setRoomId", { roomId: this.roomId });
+  //   await setTimeout(periodicalSetRoomId, 10000)
+  // }
+  
+
+  // describe('ルームのテスト', () => {
   //   test('ルームのURLをコピーできていること', async () => {
   //     this.sleep(3000)
   //     const roomUrl = wrapper.find('#room-url')
