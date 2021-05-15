@@ -125,47 +125,48 @@ describe('Timer', () => {
       const message = wrapper.find('#message-box')
       expect(message.text()).toBe('終わったよ！！')
     })
+
+    test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
+      wrapper.vm.$data.timerFinished = false
+  
+      wrapper.vm.$nextTick(() => {
+        const message = wrapper.find('#message-box')
+        expect(message.exists()).toBe(false)
+        done()
+      })
+    })
+
+    test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
+      const startButton = wrapper.find('#start-button')
+  
+      wrapper.vm.timerTime = 1
+      await startButton.trigger("click")
+      await sleep(2000)
+      const messageBox = wrapper.find('#message-box')
+      await messageBox.trigger('click')
+  
+      expect(isReset(wrapper)).toBe(true)
+    })
+
+    test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
+      const startButton = wrapper.find('#start-button')
+      const resetButton = wrapper.find('#reset-button')
+      wrapper.vm.timerTime = 10
+      await startButton.trigger('click')
+      await resetButton.trigger('click')
+  
+      expect(isReset(wrapper)).toBe(true)
+    })
+
+    test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
+      const startButton = wrapper.find('#start-button')
+      wrapper.vm.timerTime = 0
+      await startButton.trigger('click')
+  
+      expect(wrapper.vm.started).toBe(false)
+    })
   });
 
-  test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
-    wrapper.vm.$data.timerFinished = false
-
-    wrapper.vm.$nextTick(() => {
-      const message = wrapper.find('#message-box')
-      expect(message.exists()).toBe(false)
-      done()
-    })
-  })
-
-  test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
-    const startButton = wrapper.find('#start-button')
-
-    wrapper.vm.timerTime = 1
-    await startButton.trigger("click")
-    await sleep(2000)
-    const messageBox = wrapper.find('#message-box')
-    await messageBox.trigger('click')
-
-    expect(isReset(wrapper)).toBe(true)
-  })
-
-  test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
-    const startButton = wrapper.find('#start-button')
-    const resetButton = wrapper.find('#reset-button')
-    wrapper.vm.timerTime = 10
-    await startButton.trigger('click')
-    await resetButton.trigger('click')
-
-    expect(isReset(wrapper)).toBe(true)
-  })
-
-  test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
-    const startButton = wrapper.find('#start-button')
-    wrapper.vm.timerTime = 0
-    await startButton.trigger('click')
-
-    expect(wrapper.vm.started).toBe(false)
-  })
 
   describe('タイマーサウンド', () => {
     test('タイマー終了サウンドがTimerコンポーネントに存在している', () => {
@@ -180,6 +181,7 @@ describe('Timer', () => {
       finishSoundSpy.mockRestore()
     })
   });
+
   describe('秒のテキストボックス', () => {
     test('秒を設定するテキストボックスが表示されていること', () => {
       const textBox = wrapper.find('#input-time-sec')
