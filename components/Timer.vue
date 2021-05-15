@@ -40,11 +40,34 @@
     <button id="reset-button" class="border rounded p-1" @click="resetTimer">
       RESET
     </button>
+    <div class="m-2">
+      <button
+        id="set-5min-button"
+        class="bg-white hover:bg-gray-100 border rounded p-1"
+        @click="setTime(5)"
+      >
+        5 min
+      </button>
+      <button
+        id="set-10min-button"
+        class="bg-white hover:bg-gray-100 border rounded p-1"
+        @click="setTime(10)"
+      >
+        10 min
+      </button>
+      <button
+        id="set-30min-button"
+        class="bg-white hover:bg-gray-100 border rounded p-1"
+        @click="setTime(30)"
+      >
+        30 min
+      </button>
+    </div>
     <div class="m-10">
       <input
         id="room-id"
         v-model="roomId"
-        class="border rounded text-center w-36"
+        class="border rounded text-center w-36 p-1"
         maxlength="10"
       />
       <button
@@ -65,7 +88,7 @@
         <input
           id="room-url"
           v-model="roomUrl"
-          class="border rounded text-center w-max"
+          class="border rounded text-center w-max p-1"
         />
         <button
           id="copy-button"
@@ -306,6 +329,10 @@ export default Vue.extend({
       this.$router.push({query: { roomId: this.roomId }}, () => {
         this.roomUrl = location.href;
       })
+    },
+    setTime: function (minutes) {
+      this.inputMin  = minutes;
+      this.inputSec = 0;
     }
   },
   watch: {

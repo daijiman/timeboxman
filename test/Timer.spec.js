@@ -252,6 +252,44 @@ describe('Timer', () => {
     })
   });
 
+  describe('時間指定ボタン', () => {
+    test('5分設定するボタンが表示されていること', () => {
+      const set5minButton = wrapper.find('#set-5min-button')
+      expect(set5minButton.exists()).toBe(true)
+    })
+
+    test('5分設定するボタンを押すとinputMinに5,inputSecに0が入っていること', () => {
+      const set5minButton = wrapper.find('#set-5min-button')
+      set5minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(5)
+      expect(wrapper.vm.$data.inputSec).toBe(0)
+    })
+
+    test('10分設定するボタンが表示されていること', () => {
+      const set10minButton = wrapper.find('#set-10min-button')
+      expect(set10minButton.exists()).toBe(true)
+    })
+
+    test('10分設定するボタンを押すとinputMinに10,inputSecに0が入っていること', () => {
+      const set10minButton = wrapper.find('#set-10min-button')
+      set10minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(10)
+      expect(wrapper.vm.$data.inputSec).toBe(0)
+    })
+
+    test('30分設定するボタンが表示されていること', () => {
+      const set30minButton = wrapper.find('#set-30min-button')
+      expect(set30minButton.exists()).toBe(true)
+    })
+
+    test('30分設定するボタンを押すとinputMinに30,inputSecに0が入っていること', () => {
+      const set30minButton = wrapper.find('#set-30min-button')
+      set30minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(30)
+      expect(wrapper.vm.$data.inputSec).toBe(0)
+    })
+  });
+
   // describe('ルームのテスト', () => {
   //   test('setRoomした後指定した時間おきにルームに入ること', () => {
   //     const spy = jest.spyOn(wrapper.vm, 'periodicalSetRoomId');
