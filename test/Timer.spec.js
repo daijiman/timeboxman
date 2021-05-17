@@ -290,14 +290,18 @@ describe('Timer', () => {
     })
   });
 
-  // describe('ルームのテスト', () => {
-  //   test('setRoomした後指定した時間おきにルームに入ること', () => {
-  //     const spy = jest.spyOn(wrapper.vm, 'periodicalSetRoomId');
-  //     await wrapper.vm.periodicalSetRoomId(3);
-  //     await sleep(6000)
-  //     expect(spy).toHaveBeenCalledTimes(2)
-  //   })
-  // });
+  describe('ルームのテスト', () => {
+    test('指定した時間おきにルームに入れること', () => {
+      jest.useFakeTimers();
+
+      const spy = jest.spyOn(wrapper.vm, 'sendSetRoomId');
+      wrapper.vm.periodicalSetRoomId(1000);
+
+      // 3000ms経過させる
+      jest.advanceTimersByTime(3000);
+      expect(spy).toHaveBeenCalledTimes(3)
+    })
+  });
 
 
   // periodicalSetRoomId = function(){

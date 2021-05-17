@@ -294,6 +294,9 @@ export default Vue.extend({
       console.log("send setRoomId");
       this.socket.emit("setRoomId", { roomId: this.roomId });
     },
+    periodicalSetRoomId: function (interval) {
+      setInterval(this.sendSetRoomId, interval)
+    },
     getTimerState: function () {
       return {
         started: this.started,
@@ -333,7 +336,14 @@ export default Vue.extend({
     setTime: function (minutes) {
       this.inputMin  = minutes;
       this.inputSec = 0;
-    }
+    },
+    test: function () {
+      console.log('testがよばれた')
+      this.test22();
+    },
+    test22: function () {
+      console.log('test22がよばれた')
+    },
   },
   watch: {
     inputSec: function () {
