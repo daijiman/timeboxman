@@ -80,7 +80,7 @@
       <button
         id="set-room-id-button"
         class="border rounded p-1"
-        @click="sendSetRoomId"
+        @click="manualSendSetRoomId"
       >
         Set Room
       </button>
@@ -143,6 +143,7 @@ export default Vue.extend({
       message2: "",
       finishTime: "",
       roomUrl: "",
+      isManualExecution: false,
     };
   },
   mounted: function () {
@@ -165,9 +166,10 @@ export default Vue.extend({
     });
     this.socket.on("setRoomIdResult", (data) => {
       console.log("setRoomIdResult");
-      if (data.result && !this.timerFinished) {
+      if (data.result && this.isManualExecution) {
         this.setMessage(`Room[${data.roomId}]に入ったよ`);
       }
+      this.isManualExecution = false;
     });
 
     this.roomUrl = location.href
@@ -209,7 +211,7 @@ export default Vue.extend({
       } else {
         console.log("query ありのときに呼ばれるところ: " + this.$route.query.roomId)
         this.roomId = this.$route.query.roomId;
-        this.sendSetRoomId();
+        this.periodicalSetRoomId(3000);
       }
     },
     setMessage: async function (message, disappear = true) {
@@ -293,6 +295,10 @@ export default Vue.extend({
     sendSetRoomId: function () {
       console.log("send setRoomId");
       this.socket.emit("setRoomId", { roomId: this.roomId });
+    },
+    manualSendSetRoomId: function () {
+      this.isManualExecution = true;
+      this.sendSetRoomId();
     },
     periodicalSetRoomId: function (interval) {
       setInterval(this.sendSetRoomId, interval)
