@@ -337,13 +337,6 @@ export default Vue.extend({
       this.inputMin  = minutes;
       this.inputSec = 0;
     },
-    test: function () {
-      console.log('testがよばれた')
-      this.test22();
-    },
-    test22: function () {
-      console.log('test22がよばれた')
-    },
   },
   watch: {
     inputSec: function () {
