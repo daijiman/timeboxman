@@ -303,23 +303,6 @@ describe('Timer', () => {
     })
   });
 
-
-  // periodicalSetRoomId = function(){
-  //   this.setRoomIdInterval = setInterval(function(){
-  //     this.socket.emit("setRoomId", { roomId: this.roomId });
-  //   }, 1000)
-  // }
-
-  // const sendSetRoomId = function () {
-  //   ///....
-  //   periodicalSetRoomId()
-  // } 
-  // const periodicalSetRoomId = async function (second = 5) {
-  //   this.socket.emit("setRoomId", { roomId: this.roomId });
-  //   await setTimeout(periodicalSetRoomId, 10000)
-  // }
-  
-
   // describe('ルームのテスト', () => {
   //   test('ルームのURLをコピーできていること', async () => {
   //     this.sleep(3000)
