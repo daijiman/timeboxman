@@ -63,6 +63,27 @@
         30 min
       </button>
     </div>
+    <div class="m-2">
+      <div class="inline-flex">
+        <button
+          id="plus-1min-button"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-l"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+          </svg>
+        </button>
+        <span class="bg-gray-400 text-gray-800 py-1 px-2">1 min</span>
+        <button
+          id="minus-1min-button"
+          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-r"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </button>
+      </div>
+    </div>
     <div class="m-10">
       <input
         id="room-id"

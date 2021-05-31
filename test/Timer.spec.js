@@ -290,6 +290,20 @@ describe('Timer', () => {
     })
   });
 
+  describe('時間増減ボタン', () => {
+    test('1分増やすボタンが表示されていること', () => {
+      const plus1minButton = wrapper.find('#plus-1min-button')
+      expect(plus1minButton.exists()).toBe(true)
+    })
+
+    test('1分減らすボタンが表示されていること', () => {
+      const minus1minButton = wrapper.find('#minus-1min-button')
+      expect(minus1minButton.exists()).toBe(true)
+    })
+
+  });
+
+
   describe('ルームのテスト', () => {
     test('指定した時間おきにルームに入れること', () => {
       jest.useFakeTimers();
