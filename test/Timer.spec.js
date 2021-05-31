@@ -296,9 +296,30 @@ describe('Timer', () => {
       expect(plus1minButton.exists()).toBe(true)
     })
 
+    test('inputMinが1のとき1分増やすボタンを押すと2になること', () => {
+      wrapper.vm.inputMin = 1
+      const plus1minButton = wrapper.find('#plus-1min-button')
+      plus1minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(2)
+    })
+
     test('1分減らすボタンが表示されていること', () => {
       const minus1minButton = wrapper.find('#minus-1min-button')
       expect(minus1minButton.exists()).toBe(true)
+    })
+
+    test('inputMinが2のとき1分減らすボタンを押すと1になること', () => {
+      wrapper.vm.inputMin = 2
+      const minus1minButton = wrapper.find('#minus-1min-button')
+      minus1minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(1)
+    })
+
+    test('inputMinが0のとき1分減らすボタンを押してもマイナスにならないこと', () => {
+      wrapper.vm.inputMin = 0
+      const minus1minButton = wrapper.find('#minus-1min-button')
+      minus1minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(0)
     })
 
   });
