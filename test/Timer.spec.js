@@ -322,6 +322,30 @@ describe('Timer', () => {
       expect(wrapper.vm.$data.inputMin).toBe(0)
     })
 
+    test('5分増やすボタンが表示されていること', () => {
+      const plus5minButton = wrapper.find('#plus-5min-button')
+      expect(plus5minButton.exists()).toBe(true)
+    })
+
+    test('inputMinが1のとき5分増やすボタンを押すと6になること', () => {
+      wrapper.vm.inputMin = 1
+      const plus5minButton = wrapper.find('#plus-5min-button')
+      plus5minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(6)
+    })
+
+    test('5分減らすボタンが表示されていること', () => {
+      const minus5minButton = wrapper.find('#minus-5min-button')
+      expect(minus5minButton.exists()).toBe(true)
+    })
+
+    test('inputMinが6のとき5分減らすボタンを押すと1になること', () => {
+      wrapper.vm.inputMin = 6
+      const minus5minButton = wrapper.find('#minus-5min-button')
+      minus5minButton.trigger("click")
+      expect(wrapper.vm.$data.inputMin).toBe(1)
+    })
+
   });
 
 
