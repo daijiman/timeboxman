@@ -26,5 +26,11 @@
     "cypress": "^8.1.0",
     "jest": "^27.0.6",
     "vue-jest": "^3.0.7"
+  },
+  "jest": {
+    "verbose": true,
+    "globals": {
+      "window": {}
+    }
   }
 }

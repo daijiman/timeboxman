@@ -67,21 +67,57 @@
       <div class="inline-flex">
         <button
           id="minus-1min-button"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-l"
+          class="
+            bg-gray-300
+            hover:bg-gray-400
+            text-gray-800
+            py-1
+            px-2
+            rounded-l
+          "
           @click="minusMin(1)"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 12H4"
+            />
           </svg>
         </button>
         <span class="bg-gray-400 text-gray-800 py-1 px-2">1 min</span>
         <button
           id="plus-1min-button"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-r"
+          class="
+            bg-gray-300
+            hover:bg-gray-400
+            text-gray-800
+            py-1
+            px-2
+            rounded-r
+          "
           @click="plusMin(1)"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
           </svg>
         </button>
       </div>
@@ -90,21 +126,57 @@
       <div class="inline-flex">
         <button
           id="minus-5min-button"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-l"
+          class="
+            bg-gray-300
+            hover:bg-gray-400
+            text-gray-800
+            py-1
+            px-2
+            rounded-l
+          "
           @click="minusMin(5)"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20 12H4"
+            />
           </svg>
         </button>
         <span class="bg-gray-400 text-gray-800 py-1 px-2">5 min</span>
         <button
           id="plus-5min-button"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 py-1 px-2 rounded-r"
+          class="
+            bg-gray-300
+            hover:bg-gray-400
+            text-gray-800
+            py-1
+            px-2
+            rounded-r
+          "
           @click="plusMin(5)"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+            />
           </svg>
         </button>
       </div>
@@ -136,21 +208,26 @@
           v-model="roomUrl"
           class="border rounded text-center w-max p-1"
         />
-        <button
-          id="copy-button"
-          class="border rounded p-1"
-          @click="doCopy"
-        >
+        <button id="copy-button" class="border rounded p-1" @click="doCopy">
           URLをコピーする
         </button>
       </div>
-      
     </div>
     <div>
       <div
         id="message-box"
         v-if="timerFinished"
-        class="bg-green-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md animate-bounce"
+        class="
+          bg-green-200
+          absolute
+          bottom-0
+          p-4
+          left-0
+          right-0
+          mx-auto
+          max-w-md
+          animate-bounce
+        "
         @click="resetTimer"
       >
         {{ message }}
@@ -158,7 +235,16 @@
       <div
         id="message-box2"
         v-if="message2"
-        class="bg-blue-200 absolute bottom-0 p-4 left-0 right-0 mx-auto max-w-md"
+        class="
+          bg-blue-200
+          absolute
+          bottom-0
+          p-4
+          left-0
+          right-0
+          mx-auto
+          max-w-md
+        "
       >
         {{ message2 }}
       </div>
@@ -170,12 +256,12 @@
 import finishedSound from "~/assets/sound/Warning-Siren01-3.mp3";
 import io from "socket.io-client";
 import Vue from "vue";
-import VueClipboard from 'vue-clipboard2'
-Vue.use(VueClipboard)
+import VueClipboard from "vue-clipboard2";
+import { mapState, mapMutations } from "vuex";
+Vue.use(VueClipboard);
 export default Vue.extend({
   data() {
     return {
-      timerTime: 1,
       inputSec: 1,
       inputMin: 0,
       roomId: "default",
@@ -198,7 +284,7 @@ export default Vue.extend({
       console.log("received : started");
       if (data.started) {
         this.resetTimer();
-        this.timerTime = data.timerTime;
+        this.setHogeTime(data.hogeTime);
         this.startTimer();
       }
     });
@@ -218,45 +304,51 @@ export default Vue.extend({
       this.isManualExecution = false;
     });
 
-    this.roomUrl = location.href
+    this.roomUrl = location.href;
     this.joinRoom();
     this.setRoomUrl();
   },
   computed: {
+    ...mapState(["hogeTime"]),
     getFormattedTime: function () {
-      const hours = Math.floor(this.timerTime / (60 * 60));
+      const hours = Math.floor(this.hogeTime / (60 * 60));
       const hoursString = this.get0PadNumber(hours, 2);
 
-      const minutes = Math.floor((this.timerTime % (60 * 60)) / 60);
+      const minutes = Math.floor((this.hogeTime % (60 * 60)) / 60);
       const minutesString = this.get0PadNumber(minutes, 2);
 
-      const seconds = this.timerTime - hours * (60 * 60) - minutes * 60;
+      const seconds = this.hogeTime - hours * (60 * 60) - minutes * 60;
       const secondsString = this.get0PadNumber(seconds, 2);
 
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
     isFinished: function () {
-      return this.timerTime < 1 && this.started === true;
+      return this.hogeTime < 1 && this.started === true;
     },
   },
   methods: {
+    ...mapMutations(["setHogeTime"]),
     doCopy: function () {
-      const savedThis = this
-      this.$copyText(this.roomUrl).then(function (e) {
-        savedThis.setMessage('コピーできました!!');
-      }, function (e) {
-        savedThis.setMessage('コピーできませんでした😭');
-      })
+      const savedThis = this;
+      this.$copyText(this.roomUrl).then(
+        function (e) {
+          savedThis.setMessage("コピーできました!!");
+        },
+        function (e) {
+          savedThis.setMessage("コピーできませんでした😭");
+        }
+      );
     },
     joinRoom: function () {
-      if (
-        this.$route.query.roomId === undefined
-      ) {
-        console.log("query なしのときに呼ばれるところ")
+      if (this.$route.query.roomId === undefined) {
+        // console.log("query なしのときに呼ばれるところ");
         this.socket.emit("getRoomId");
       } else {
-        console.log("query ありのときに呼ばれるところ: " + this.$route.query.roomId)
+        // console.log(
+        //   "query ありのときに呼ばれるところ: " + this.$route.query.roomId
+        // );
         this.roomId = this.$route.query.roomId;
+        this.sendSetRoomId();
         this.periodicalSetRoomId(60000);
       }
     },
@@ -276,11 +368,15 @@ export default Vue.extend({
     sleep: function (msec) {
       return new Promise((resolve) => setTimeout(resolve, msec));
     },
+    hogeTimer: function () {
+      this.setHogeTime(30);
+      console.log(">>>>" + this.hogeTime + "<<<<<");
+    },
     startTimer: function () {
-      if (this.timerTime < 1) {
+      if (this.hogeTime < 1) {
         return;
       }
-      this.finishTime = this.getFinishTime(this.timerTime);
+      this.finishTime = this.getFinishTime(this.hogeTime);
       this.started = true;
       this.timerFinished = false;
     },
@@ -308,14 +404,15 @@ export default Vue.extend({
     },
     countDown: async function () {
       let remainingTime = 0;
-      while (this.timerTime > 0 && this.started) {
+      while (this.hogeTime > 0 && this.started) {
         await this.sleep(1000);
         if (!this.started) {
           break;
         }
         remainingTime = this.finishTime - new Date().getTime();
-        this.timerTime =
-          remainingTime < 0 ? 0 : Math.floor(remainingTime / 1000);
+        this.setHogeTime(
+          remainingTime < 0 ? 0 : Math.floor(remainingTime / 1000)
+        );
       }
     },
     resetTimer: function () {
@@ -346,12 +443,12 @@ export default Vue.extend({
       this.sendSetRoomId();
     },
     periodicalSetRoomId: function (interval) {
-      setInterval(this.sendSetRoomId, interval)
+      setInterval(this.sendSetRoomId, interval);
     },
     getTimerState: function () {
       return {
         started: this.started,
-        timerTime: this.timerTime,
+        hogeTime: this.hogeTime,
         roomId: this.roomId,
         finishTime: this.finishTime,
       };
@@ -375,14 +472,14 @@ export default Vue.extend({
       return time;
     },
     updateTimerTime: function () {
-      this.timerTime = Number(this.inputSec) + Number(this.inputMin) * 60;
+      this.setHogeTime(Number(this.inputSec) + Number(this.inputMin) * 60);
     },
     setRoomUrl: function () {
       // $router.push は await では処理が完了するまでの同期ができず、
       // 第2引数に完了時のコールバック関数を指定する必要がある
-      this.$router.push({query: { roomId: this.roomId }}, () => {
+      this.$router.push({ query: { roomId: this.roomId } }, () => {
         this.roomUrl = location.href;
-      })
+      });
     },
     setTime: function (minutes) {
       this.inputMin = minutes;
@@ -396,7 +493,7 @@ export default Vue.extend({
       if (this.inputMin < 0) {
         this.inputMin = 0;
       }
-    }
+    },
   },
   watch: {
     inputSec: function () {
@@ -413,14 +510,14 @@ export default Vue.extend({
         this.sendStarted();
       }
     },
-    timerTime: function () {
+    hogeTime: function () {
       if (this.isFinished) {
         this.finishTimer();
       }
     },
     roomId: function () {
-      this.setRoomUrl()
-    }
+      this.setRoomUrl();
+    },
   },
 });
 </script>

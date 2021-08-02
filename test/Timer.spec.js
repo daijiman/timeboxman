@@ -2,21 +2,33 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+// import * as hoge from '@/store/index.js'
+import { state, mutations } from '@/store/index.js'
+
+const localVue = createLocalVue()
+localVue.use(Vuex)
 
 describe('Timer', () => {
   let wrapper;
-  const localVue = createLocalVue()
   localVue.use(VueRouter)
   const router = new VueRouter()
+  let store
 
   beforeEach(() => {
-    wrapper = shallowMount(Timer, {
-      localVue,
-      router,
-      stubs: {
-        TimeDisplay: true
-      },
-    })
+    // store = new Vuex.Store(hoge)
+    store = new Vuex.Store({
+      state,
+      mutations
+    }),
+      wrapper = shallowMount(Timer, {
+        store,
+        localVue,
+        router,
+        stubs: {
+          TimeDisplay: true
+        },
+      })
   });
 
   test('is a Vue instance', () => {
@@ -29,7 +41,7 @@ describe('Timer', () => {
   })
 
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
-    wrapper.vm.timerTime = 3
+    wrapper.vm.setHogeTime(3)
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
   })
 
@@ -42,17 +54,18 @@ describe('Timer', () => {
 
     test('スタートボタンを押すとタイマーがスタートすること', () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.timerTime = 2
+      wrapper.vm.setHogeTime(2)
       expect(wrapper.vm.$data.started).toBe(false)
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
     })
 
-    test('スタートボタンを押すとタイマー完了状態がリセットされること', () => {
+    test('スタートボタンを押すとタイマー完了状態がリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
+      wrapper.vm.setHogeTime(10)
       wrapper.vm.$data.timerFinished = true
 
-      startButton.trigger("click")
+      await startButton.trigger("click")
 
       expect(wrapper.vm.$data.timerFinished).toBe(false)
     })
@@ -68,7 +81,7 @@ describe('Timer', () => {
     test('ストップボタンを押すとタイマーがストップすること', () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.timerTime = 10
+      wrapper.vm.setHogeTime(10)
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
       stopButton.trigger("click")
@@ -78,7 +91,7 @@ describe('Timer', () => {
     test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.timerTime = 10
+      wrapper.vm.setHogeTime(10)
 
       await startButton.trigger('click')
       await stopButton.trigger('click')
@@ -89,7 +102,7 @@ describe('Timer', () => {
 
   test('タイマーがカウントダウンしている間は時間入力のテキストボックスに入力できないようになること', async () => {
     const startButton = wrapper.find('#start-button')
-    wrapper.vm.timerTime = 10
+    wrapper.vm.setHogeTime(10)
     await startButton.trigger("click")
     const inputTime = wrapper.find('#input-time-sec')
     expect(inputTime.attributes().disabled).toBe("disabled")
@@ -111,7 +124,7 @@ describe('Timer', () => {
   })
 
   test('カウントダウンがゼロになったらタイマー完了状態になること', async () => {
-    wrapper.vm.timerTime = 1
+    wrapper.vm.setHogeTime(1)
     await wrapper.vm.startTimer()
     await sleep(1000)
 
@@ -128,7 +141,7 @@ describe('Timer', () => {
 
     test('タイマーが完了状態でない場合は、メッセージボックスが存在しないこと', done => {
       wrapper.vm.$data.timerFinished = false
-  
+
       wrapper.vm.$nextTick(() => {
         const message = wrapper.find('#message-box')
         expect(message.exists()).toBe(false)
@@ -138,31 +151,31 @@ describe('Timer', () => {
 
     test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
-  
-      wrapper.vm.timerTime = 1
+
+      wrapper.vm.setHogeTime(1)
       await startButton.trigger("click")
       await sleep(2000)
       const messageBox = wrapper.find('#message-box')
       await messageBox.trigger('click')
-  
+
       expect(isReset(wrapper)).toBe(true)
     })
 
     test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
       const resetButton = wrapper.find('#reset-button')
-      wrapper.vm.timerTime = 10
+      wrapper.vm.setHogeTime(10)
       await startButton.trigger('click')
       await resetButton.trigger('click')
-  
+
       expect(isReset(wrapper)).toBe(true)
     })
 
-    test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
+    test('タイマーの時間（hogeTime）が0のときにタイマーをスタートできないこと', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.timerTime = 0
+      wrapper.vm.setHogeTime(0)
       await startButton.trigger('click')
-  
+
       expect(wrapper.vm.started).toBe(false)
     })
   });
@@ -236,7 +249,7 @@ describe('Timer', () => {
       await inputMin.setValue(3)
       await inputSec.setValue(1)
 
-      expect(wrapper.vm.timerTime).toBe(181)
+      expect(wrapper.vm.hogeTime).toBe(181)
     });
     test('分のテキストボックスに数字以外を入力したら空文字にする', async () => {
       const inputMin = wrapper.find('#input-time-min')
@@ -245,7 +258,7 @@ describe('Timer', () => {
     });
     test('タイマーがカウントダウンしている間は分のテキストボックスに入力できないようになる', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.timerTime = 10
+      wrapper.vm.setHogeTime(10)
       await startButton.trigger("click")
       const inputMin = wrapper.find('#input-time-min')
       expect(inputMin.attributes().disabled).toBe("disabled")
@@ -379,10 +392,11 @@ describe('Timer', () => {
   // });
 
   const isReset = (timer) => {
-    const { timerTime, started, timerFinished, message } = timer.vm.$data
+    const { started, timerFinished, message } = timer.vm.$data
+    const hogeTime = timer.vm.hogeTime
     const motoTime = Number(timer.vm.inputSec) + Number(timer.vm.inputMin) * 60;
     if (
-      timerTime === motoTime &&
+      hogeTime === motoTime &&
       timerFinished === false &&
       message === '' &&
       started === false

@@ -1,27 +1,23 @@
-const state = () => ({
-  timerTime: 0
+export const state = () => ({
+  hogeTime: 1
 })
 
-const getters = {
-  timerTime: state => state.timerTime
+export const getters = {
+  hogeTime: state => state.hogeTime
 }
 
-const mutations = {
-  setTimerTime(state, time) {
-    state.timerTime = time
+export const mutations = {
+  setHogeTime(state, time) {
+    state.hogeTime = time
   }
 }
 
-const actions = {
-  // setTimerTime({ commit }) {
-  setTimerTime(context, payload) {
-    context.commit('setTimerTime', payload.time)
+export const actions = {
+  // setHogeTime({ commit }) {
+  setHogeTime(context, payload) {
+    context.commit('setHogeTime', payload.time)
+  },
+  hogeTime(context, payload) {
+    context.commit('setHogeTime', payload.time)
   }
-}
-
-export default {
-  state,
-  getters,
-  mutations,
-  actions
 }
