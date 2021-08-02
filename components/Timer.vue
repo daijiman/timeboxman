@@ -310,18 +310,18 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(["timerTime"]),
-    getFormattedTime: function () {
-      const hours = Math.floor(this.timerTime / (60 * 60));
-      const hoursString = this.get0PadNumber(hours, 2);
+    // getFormattedTime: function () {
+    //   const hours = Math.floor(this.timerTime / (60 * 60));
+    //   const hoursString = this.get0PadNumber(hours, 2);
 
-      const minutes = Math.floor((this.timerTime % (60 * 60)) / 60);
-      const minutesString = this.get0PadNumber(minutes, 2);
+    //   const minutes = Math.floor((this.timerTime % (60 * 60)) / 60);
+    //   const minutesString = this.get0PadNumber(minutes, 2);
 
-      const seconds = this.timerTime - hours * (60 * 60) - minutes * 60;
-      const secondsString = this.get0PadNumber(seconds, 2);
+    //   const seconds = this.timerTime - hours * (60 * 60) - minutes * 60;
+    //   const secondsString = this.get0PadNumber(seconds, 2);
 
-      return hoursString + ":" + minutesString + ":" + secondsString;
-    },
+    //   return hoursString + ":" + minutesString + ":" + secondsString;
+    // },
     isFinished: function () {
       return this.timerTime < 1 && this.started === true;
     },
@@ -362,15 +362,11 @@ export default Vue.extend({
     hideMessageBox2: function () {
       this.message2 = "";
     },
-    get0PadNumber: function (number, length) {
-      return number.toString().padStart(length, "0");
-    },
+    // get0PadNumber: function (number, length) {
+    //   return number.toString().padStart(length, "0");
+    // },
     sleep: function (msec) {
       return new Promise((resolve) => setTimeout(resolve, msec));
-    },
-    timerTimer: function () {
-      this.setTimerTime(30);
-      console.log(">>>>" + this.timerTime + "<<<<<");
     },
     startTimer: function () {
       if (this.timerTime < 1) {

@@ -13,7 +13,6 @@ export const mutations = {
 }
 
 export const actions = {
-  // setTimerTime({ commit }) {
   setTimerTime(context, payload) {
     context.commit('setTimerTime', payload.time)
   },

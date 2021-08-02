@@ -38,11 +38,6 @@ describe('Timer', () => {
     expect(div.text()).toBe('Timeboxman')
   })
 
-  test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
-    wrapper.vm.setTimerTime(3)
-    expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
-  })
-
   const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
   describe('スタートボタン', () => {
     test('スタートボタンが表示されていること', () => {
