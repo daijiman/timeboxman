@@ -284,7 +284,7 @@ export default Vue.extend({
       console.log("received : started");
       if (data.started) {
         this.resetTimer();
-        this.setTimerTime(data.hogeTime);
+        this.setTimerTime(data.timerTime);
         this.startTimer();
       }
     });
@@ -309,21 +309,21 @@ export default Vue.extend({
     this.setRoomUrl();
   },
   computed: {
-    ...mapState(["hogeTime"]),
+    ...mapState(["timerTime"]),
     getFormattedTime: function () {
-      const hours = Math.floor(this.hogeTime / (60 * 60));
+      const hours = Math.floor(this.timerTime / (60 * 60));
       const hoursString = this.get0PadNumber(hours, 2);
 
-      const minutes = Math.floor((this.hogeTime % (60 * 60)) / 60);
+      const minutes = Math.floor((this.timerTime % (60 * 60)) / 60);
       const minutesString = this.get0PadNumber(minutes, 2);
 
-      const seconds = this.hogeTime - hours * (60 * 60) - minutes * 60;
+      const seconds = this.timerTime - hours * (60 * 60) - minutes * 60;
       const secondsString = this.get0PadNumber(seconds, 2);
 
       return hoursString + ":" + minutesString + ":" + secondsString;
     },
     isFinished: function () {
-      return this.hogeTime < 1 && this.started === true;
+      return this.timerTime < 1 && this.started === true;
     },
   },
   methods: {
@@ -368,15 +368,15 @@ export default Vue.extend({
     sleep: function (msec) {
       return new Promise((resolve) => setTimeout(resolve, msec));
     },
-    hogeTimer: function () {
+    timerTimer: function () {
       this.setTimerTime(30);
-      console.log(">>>>" + this.hogeTime + "<<<<<");
+      console.log(">>>>" + this.timerTime + "<<<<<");
     },
     startTimer: function () {
-      if (this.hogeTime < 1) {
+      if (this.timerTime < 1) {
         return;
       }
-      this.finishTime = this.getFinishTime(this.hogeTime);
+      this.finishTime = this.getFinishTime(this.timerTime);
       this.started = true;
       this.timerFinished = false;
     },
@@ -404,7 +404,7 @@ export default Vue.extend({
     },
     countDown: async function () {
       let remainingTime = 0;
-      while (this.hogeTime > 0 && this.started) {
+      while (this.timerTime > 0 && this.started) {
         await this.sleep(1000);
         if (!this.started) {
           break;
@@ -448,7 +448,7 @@ export default Vue.extend({
     getTimerState: function () {
       return {
         started: this.started,
-        hogeTime: this.hogeTime,
+        timerTime: this.timerTime,
         roomId: this.roomId,
         finishTime: this.finishTime,
       };
@@ -510,7 +510,7 @@ export default Vue.extend({
         this.sendStarted();
       }
     },
-    hogeTime: function () {
+    timerTime: function () {
       if (this.isFinished) {
         this.finishTimer();
       }

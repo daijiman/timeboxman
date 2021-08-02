@@ -171,7 +171,7 @@ describe('Timer', () => {
       expect(isReset(wrapper)).toBe(true)
     })
 
-    test('タイマーの時間（hogeTime）が0のときにタイマーをスタートできないこと', async () => {
+    test('タイマーの時間（timerTime）が0のときにタイマーをスタートできないこと', async () => {
       const startButton = wrapper.find('#start-button')
       wrapper.vm.setTimerTime(0)
       await startButton.trigger('click')
@@ -249,7 +249,7 @@ describe('Timer', () => {
       await inputMin.setValue(3)
       await inputSec.setValue(1)
 
-      expect(wrapper.vm.hogeTime).toBe(181)
+      expect(wrapper.vm.timerTime).toBe(181)
     });
     test('分のテキストボックスに数字以外を入力したら空文字にする', async () => {
       const inputMin = wrapper.find('#input-time-min')
@@ -393,10 +393,10 @@ describe('Timer', () => {
 
   const isReset = (timer) => {
     const { started, timerFinished, message } = timer.vm.$data
-    const hogeTime = timer.vm.hogeTime
+    const timerTime = timer.vm.timerTime
     const motoTime = Number(timer.vm.inputSec) + Number(timer.vm.inputMin) * 60;
     if (
-      hogeTime === motoTime &&
+      timerTime === motoTime &&
       timerFinished === false &&
       message === '' &&
       started === false
