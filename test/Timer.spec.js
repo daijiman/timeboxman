@@ -3,7 +3,7 @@ import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-import { state, mutations } from '@/store/index.js'
+import { state, mutations } from '@/store/index'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
