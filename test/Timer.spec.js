@@ -3,7 +3,6 @@ import Timer from '@/components/Timer.vue'
 import { expect, test } from '@jest/globals'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-// import * as hoge from '@/store/index.js'
 import { state, mutations } from '@/store/index.js'
 
 const localVue = createLocalVue()
@@ -16,7 +15,6 @@ describe('Timer', () => {
   let store
 
   beforeEach(() => {
-    // store = new Vuex.Store(hoge)
     store = new Vuex.Store({
       state,
       mutations
