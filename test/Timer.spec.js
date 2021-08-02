@@ -41,7 +41,7 @@ describe('Timer', () => {
   })
 
   test('3を渡したら00:00:03 というフォーマットにして文字列を返す', () => {
-    wrapper.vm.setHogeTime(3)
+    wrapper.vm.setTimerTime(3)
     expect(wrapper.vm.getFormattedTime).toBe('00:00:03')
   })
 
@@ -54,7 +54,7 @@ describe('Timer', () => {
 
     test('スタートボタンを押すとタイマーがスタートすること', () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setHogeTime(2)
+      wrapper.vm.setTimerTime(2)
       expect(wrapper.vm.$data.started).toBe(false)
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
@@ -62,7 +62,7 @@ describe('Timer', () => {
 
     test('スタートボタンを押すとタイマー完了状態がリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setHogeTime(10)
+      wrapper.vm.setTimerTime(10)
       wrapper.vm.$data.timerFinished = true
 
       await startButton.trigger("click")
@@ -81,7 +81,7 @@ describe('Timer', () => {
     test('ストップボタンを押すとタイマーがストップすること', () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.setHogeTime(10)
+      wrapper.vm.setTimerTime(10)
       startButton.trigger("click")
       expect(wrapper.vm.$data.started).toBe(true)
       stopButton.trigger("click")
@@ -91,7 +91,7 @@ describe('Timer', () => {
     test('ストップボタンをクリック直後にスタートボタンが1秒間クリックできないようになっていること', async () => {
       const startButton = wrapper.find('#start-button')
       const stopButton = wrapper.find('#stop-button')
-      wrapper.vm.setHogeTime(10)
+      wrapper.vm.setTimerTime(10)
 
       await startButton.trigger('click')
       await stopButton.trigger('click')
@@ -102,7 +102,7 @@ describe('Timer', () => {
 
   test('タイマーがカウントダウンしている間は時間入力のテキストボックスに入力できないようになること', async () => {
     const startButton = wrapper.find('#start-button')
-    wrapper.vm.setHogeTime(10)
+    wrapper.vm.setTimerTime(10)
     await startButton.trigger("click")
     const inputTime = wrapper.find('#input-time-sec')
     expect(inputTime.attributes().disabled).toBe("disabled")
@@ -124,7 +124,7 @@ describe('Timer', () => {
   })
 
   test('カウントダウンがゼロになったらタイマー完了状態になること', async () => {
-    wrapper.vm.setHogeTime(1)
+    wrapper.vm.setTimerTime(1)
     await wrapper.vm.startTimer()
     await sleep(1000)
 
@@ -152,7 +152,7 @@ describe('Timer', () => {
     test('タイマー終了後、メッセージをクリックするとタイマーがリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
 
-      wrapper.vm.setHogeTime(1)
+      wrapper.vm.setTimerTime(1)
       await startButton.trigger("click")
       await sleep(2000)
       const messageBox = wrapper.find('#message-box')
@@ -164,7 +164,7 @@ describe('Timer', () => {
     test('タイマーが止まっているときにリセットボタンがクリックされたらタイマーがリセットされること', async () => {
       const startButton = wrapper.find('#start-button')
       const resetButton = wrapper.find('#reset-button')
-      wrapper.vm.setHogeTime(10)
+      wrapper.vm.setTimerTime(10)
       await startButton.trigger('click')
       await resetButton.trigger('click')
 
@@ -173,7 +173,7 @@ describe('Timer', () => {
 
     test('タイマーの時間（hogeTime）が0のときにタイマーをスタートできないこと', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setHogeTime(0)
+      wrapper.vm.setTimerTime(0)
       await startButton.trigger('click')
 
       expect(wrapper.vm.started).toBe(false)
@@ -258,7 +258,7 @@ describe('Timer', () => {
     });
     test('タイマーがカウントダウンしている間は分のテキストボックスに入力できないようになる', async () => {
       const startButton = wrapper.find('#start-button')
-      wrapper.vm.setHogeTime(10)
+      wrapper.vm.setTimerTime(10)
       await startButton.trigger("click")
       const inputMin = wrapper.find('#input-time-min')
       expect(inputMin.attributes().disabled).toBe("disabled")

@@ -284,7 +284,7 @@ export default Vue.extend({
       console.log("received : started");
       if (data.started) {
         this.resetTimer();
-        this.setHogeTime(data.hogeTime);
+        this.setTimerTime(data.hogeTime);
         this.startTimer();
       }
     });
@@ -327,7 +327,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    ...mapMutations(["setHogeTime"]),
+    ...mapMutations(["setTimerTime"]),
     doCopy: function () {
       const savedThis = this;
       this.$copyText(this.roomUrl).then(
@@ -369,7 +369,7 @@ export default Vue.extend({
       return new Promise((resolve) => setTimeout(resolve, msec));
     },
     hogeTimer: function () {
-      this.setHogeTime(30);
+      this.setTimerTime(30);
       console.log(">>>>" + this.hogeTime + "<<<<<");
     },
     startTimer: function () {
@@ -410,7 +410,7 @@ export default Vue.extend({
           break;
         }
         remainingTime = this.finishTime - new Date().getTime();
-        this.setHogeTime(
+        this.setTimerTime(
           remainingTime < 0 ? 0 : Math.floor(remainingTime / 1000)
         );
       }
@@ -472,7 +472,7 @@ export default Vue.extend({
       return time;
     },
     updateTimerTime: function () {
-      this.setHogeTime(Number(this.inputSec) + Number(this.inputMin) * 60);
+      this.setTimerTime(Number(this.inputSec) + Number(this.inputMin) * 60);
     },
     setRoomUrl: function () {
       // $router.push は await では処理が完了するまでの同期ができず、

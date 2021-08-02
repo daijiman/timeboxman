@@ -7,17 +7,17 @@ export const getters = {
 }
 
 export const mutations = {
-  setHogeTime(state, time) {
+  setTimerTime(state, time) {
     state.hogeTime = time
   }
 }
 
 export const actions = {
-  // setHogeTime({ commit }) {
-  setHogeTime(context, payload) {
-    context.commit('setHogeTime', payload.time)
+  // setTimerTime({ commit }) {
+  setTimerTime(context, payload) {
+    context.commit('setTimerTime', payload.time)
   },
   hogeTime(context, payload) {
-    context.commit('setHogeTime', payload.time)
+    context.commit('setTimerTime', payload.time)
   }
 }
