@@ -262,7 +262,7 @@ Vue.use(VueClipboard);
 export default Vue.extend({
   data() {
     return {
-      inputSec: 1,
+      inputSec: 0,
       inputMin: 0,
       roomId: "default",
       started: false,

@@ -27,8 +27,8 @@ describe('TimerDisplay#', () => {
         }
       })
   });
-  test('1秒のタイマーが表示されていること', () => {
+  test('0秒のタイマーが表示されていること', () => {
     const timer = wrapper.find('#timer')
-    expect(timer.text()).toBe('00:00:01')
+    expect(timer.text()).toBe('00:00:00')
   })
 });

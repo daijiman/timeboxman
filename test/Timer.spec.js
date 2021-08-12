@@ -27,6 +27,7 @@ describe('Timer', () => {
           TimeDisplay: true
         },
       })
+    wrapper.vm.setTimerTime(1)
   });
 
   test('is a Vue instance', () => {

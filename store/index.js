@@ -1,5 +1,5 @@
 export const state = () => ({
-  timerTime: 1
+  timerTime: 0
 })
 
 export const getters = {
