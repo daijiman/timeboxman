@@ -1,6 +1,11 @@
 describe('Room関連', () => {
+  it('Test', () => {
+    cy.visit('/')
+    cy.visit('/')
+  });
   it('roomIdに11文字入力しても10文字になること', () => {
     cy.visit('/')
+    cy.wait(2000)
     cy.get('#room-id')
       .clear()
       .type('abcdefghijk')
@@ -46,13 +51,15 @@ describe('Room関連', () => {
       .clear()
       .type('abcdefghij')
     cy.get('#set-room-id-button').click()
+    cy.wait(1000)
+    cy.get('#room-id')
     cy.get('#message-box2').should('contain', 'Room[abcdefghij]に入ったよ')
   });
 })
 describe('タイマーの表示', () => {
-  it('初期アクセス時にタイマーの表示が00:00:01になっている', () => {
+  it('初期アクセス時にタイマーの表示が00:00:00になっている', () => {
     cy.visit('/')
-    cy.get('#timer').should('contain', "00:00:01")
+    cy.get('#timer').should('contain', "00:00:00")
   })
 
   it('タイマーを3秒にセットするとタイマーの表示が00:00:03になる', () => {
